@@ -1,4 +1,6 @@
 <div style="padding: 13px;">
+  <button mat-raised-button (click)="createUser()">New</button>
+
   <mat-card *ngFor="let user of users" style="margin-top:10px;">
     <mat-card-header>
       <mat-card-title>{{user.uName}}</mat-card-title>
@@ -9,9 +11,11 @@
       <p>
         {{user.comments}}
       </p>
+      <span *ngIf="user.superAdmin">SA</span>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button (click)="editUser(user.id)">Edit</button>
+      <button mat-raised-button (click)="editUser(user.id)">Edit</button>
+      <button mat-raised-button (click)="deleteUser(user.id)">Delete</button>
     </mat-card-actions>
   </mat-card>
 </div>

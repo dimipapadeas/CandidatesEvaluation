@@ -10,6 +10,8 @@ export interface User {
   fName: string;
   sName: string;
   comments: string;
+  superAdmin: boolean;
+  permissions: any[];
 }
 
 @Injectable({
@@ -26,11 +28,23 @@ export class UserService {
     return this.httpClient.get(this.SERVER_URL + 'getAll')
   }
 
-  getUserById(paramId: any) {
-    return this.httpClient.get<User>(`${this.SERVER_URL + 'getUserById'}/${paramId}`)
+  getUserById(userId: any) {
+    return this.httpClient.get<User>(`${this.SERVER_URL + 'getUserById'}/${userId}`)
   }
 
   updateUser(user: User): Observable<User> {
     return this.httpClient.put<User>(`${this.SERVER_URL + 'update'}`, user);
+  }
+
+  deleteUser(userId: any) {
+    return this.httpClient.delete(`${this.SERVER_URL + 'delete'}/${userId}`);
+  }
+
+  createDraftUser() {
+    return this.httpClient.get<User>(`${this.SERVER_URL + 'createDraftUser'}`)
+  }
+
+  storeNewUser(user: User): Observable<User> {
+    return this.httpClient.put<User>(`${this.SERVER_URL + 'storeNewUser'}`, user);
   }
 }

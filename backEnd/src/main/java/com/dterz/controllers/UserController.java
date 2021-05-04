@@ -19,8 +19,8 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("getUserById/{paramId}")
-    public User getUserById(@PathVariable("paramId") long userId) {
+    @GetMapping("getUserById/{userId}")
+    public User getUserById(@PathVariable("userId") long userId) {
         return userService.getUserById(userId);
     }
 
@@ -29,4 +29,18 @@ public class UserController {
         return userService.updateUser(user);
     }
 
+    @GetMapping("createDraftUser")
+    public User createDraftUser() {
+        return userService.createDraftUser(7);
+    }
+
+    @PutMapping("storeNewUser")
+    public User storeNewUser(@RequestBody User user) {
+        return userService.storeNewUser(user);
+    }
+
+    @DeleteMapping("delete/{userId}")
+    public void delete(@PathVariable("userId") long userId) {
+        userService.deleteUser(userId);
+    }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../user.service";
+import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -22,5 +22,15 @@ export class UserComponent implements OnInit {
 
   editUser(useId) {
     this.router.navigate(['/editUser', useId]);
+  }
+
+  deleteUser(useId) {
+    this.userService.deleteUser(useId).subscribe((data: any[]) => {
+      this.router.navigate((['/home']));
+    });
+  }
+
+  createUser() {
+    this.router.navigate(['/newUser']);
   }
 }

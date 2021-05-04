@@ -3,13 +3,18 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {AboutComponent} from "./about/about.component";
 import {UserComponent} from "./user/user.component";
-import {EditUserComponent} from "./edit-user/edit-user.component";
+import {EditUserComponent} from "./user/edit-user/edit-user.component";
+import {LoginComponent} from "./login/login.component";
+import {AuthGaurdService} from "./services/auth-gaurd.service";
+import {NewUserComponent} from "./user/new-user/new-user.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
-  {path: 'user', component: UserComponent},
-  {path: 'editUser/:id', component: EditUserComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGaurdService]},
+  {path: 'user', component: UserComponent, canActivate: [AuthGaurdService]},
+  {path: 'newUser', component: NewUserComponent, canActivate: [AuthGaurdService]},
+  {path: 'editUser/:id', component: EditUserComponent, canActivate: [AuthGaurdService]},
   {path: 'about', component: AboutComponent},
 ];
 

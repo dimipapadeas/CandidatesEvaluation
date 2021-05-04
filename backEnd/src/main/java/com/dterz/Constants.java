@@ -2,5 +2,5 @@ package com.dterz;
 
 public class Constants {
 
-    private static String API_PATH = "api/";
+    public static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 }

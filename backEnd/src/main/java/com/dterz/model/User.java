@@ -1,6 +1,7 @@
 package com.dterz.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER")
@@ -27,6 +28,16 @@ public class User {
 
     @Column
     private String comments;
+
+    @Column
+    private boolean superAdmin;
+
+    @ManyToMany
+    @JoinTable(name = "USER_PERMISSION",
+            joinColumns = {@JoinColumn(name = "FK_USER")},
+            inverseJoinColumns = {@JoinColumn(name = "FK_PERMISSION")})
+    private Set<Permission> permissions;
+
 
     public User() {
     }
@@ -85,5 +96,21 @@ public class User {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public boolean isSuperAdmin() {
+        return superAdmin;
+    }
+
+    public void setSuperAdmin(boolean superAdmin) {
+        this.superAdmin = superAdmin;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

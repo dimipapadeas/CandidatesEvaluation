@@ -1,0 +1,56 @@
+<div style="padding: 15px;">
+  <form [formGroup]="form" (ngSubmit)="formSubmit(form)">
+
+    <div class="row form-group">
+      <label for="titleInput">Username</label>
+      <input type="text" class="form-control" id="titleInput" placeholder="Username" formControlName="uName">
+      <div *ngIf="form.get('uName').errors?.required && form.get('uName').dirty" class="text-danger">
+        Field is required
+      </div>
+      <div *ngIf="form.get('uName').errors?.minlength && form.get('uName').dirty" class="text-danger">
+        The minimum length of field is 3 characters
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label for="fName">Firstname</label>
+      <input type="text" class="form-control" id="fName" placeholder="Enter Firstname" formControlName="fName">
+      <div *ngIf="form.get('fName').invalid && form.get('fName').dirty" class="text-danger">
+        Field is required
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label for="sName">Lastname</label>
+      <input type="text" class="form-control" id="sName" placeholder="Enter Lastname" formControlName="sName">
+      <div *ngIf="form.get('sName').invalid && form.get('sName').dirty" class="text-danger">
+        Field is required
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label for="pass">Password</label>
+      <input type="password" class="form-control" id="pass" placeholder="Enter Password" formControlName="pass">
+      <div *ngIf="form.get('pass').invalid && form.get('pass').dirty" class="text-danger">
+        Field is required
+      </div>
+      <div *ngIf="form.get('pass').errors?.minlength && form.get('pass').dirty" class="text-danger">
+        The minimum length of field is 4 characters
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label for="comments">Comment</label>
+      <input type="text" class="form-control" id="comments" formControlName="comments">
+    </div>
+
+    <div class="row">
+      <div class="col-form-label">
+        <button mat-raised-button type="submit">Submit</button>
+      </div>
+      <div class="col-form-label">
+        <button mat-raised-button routerLink="/user">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
