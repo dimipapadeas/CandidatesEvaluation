@@ -19,6 +19,12 @@ import {BasicAuthHtppInterceptorService} from "./services/basic-auth-htpp-interc
 import {LoginComponent} from './login/login.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {NewUserComponent} from './user/new-user/new-user.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { AccountComponent } from './account/account.component';
+import { TransactionComponent } from './transaction/transaction.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +35,8 @@ import {NewUserComponent} from './user/new-user/new-user.component';
     EditUserComponent,
     LoginComponent,
     NewUserComponent,
+    AccountComponent,
+    TransactionComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +51,10 @@ import {NewUserComponent} from './user/new-user/new-user.component';
     ReactiveFormsModule,
     FormsModule,
     MatMenuModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true

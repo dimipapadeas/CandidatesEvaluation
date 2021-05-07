@@ -1,6 +1,7 @@
 package com.dterz.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,26 +12,29 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(name = "uName")
     private String uName;
 
-    @Column
+    @Column(name = "salt")
     private String salt;
 
-    @Column
+    @Column(name = "pass")
     private String pass;
 
-    @Column
+    @Column(name = "fName")
     private String fName;
 
-    @Column
+    @Column(name = "sName")
     private String sName;
 
-    @Column
+    @Column(name = "comments")
     private String comments;
 
-    @Column
+    @Column(name = "superAdmin")
     private boolean superAdmin;
+
+    @OneToMany(mappedBy = "user")
+    private List<Transaction> transactions;
 
     @ManyToMany
     @JoinTable(name = "USER_PERMISSION",
@@ -104,6 +108,14 @@ public class User {
 
     public void setSuperAdmin(boolean superAdmin) {
         this.superAdmin = superAdmin;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     public Set<Permission> getPermissions() {

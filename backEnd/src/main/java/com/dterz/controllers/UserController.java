@@ -1,6 +1,6 @@
 package com.dterz.controllers;
 
-import com.dterz.model.User;
+import com.dterz.dtos.UserDTO;
 import com.dterz.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,31 +11,35 @@ import java.util.List;
 @RequestMapping("api/user/")
 public class UserController {
 
-    @Autowired
     private UserService userService;
 
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("getAll")
-    public List<User> getUser() {
+    public List<UserDTO> getUser() {
         return userService.getAllUsers();
     }
 
     @GetMapping("getUserById/{userId}")
-    public User getUserById(@PathVariable("userId") long userId) {
+    public UserDTO getUserById(@PathVariable("userId") long userId) {
         return userService.getUserById(userId);
     }
 
     @PutMapping("update")
-    public User update(@RequestBody User user) {
+    public UserDTO update(@RequestBody UserDTO user) {
         return userService.updateUser(user);
     }
 
     @GetMapping("createDraftUser")
-    public User createDraftUser() {
+    public UserDTO createDraftUser() {
         return userService.createDraftUser(7);
     }
 
     @PutMapping("storeNewUser")
-    public User storeNewUser(@RequestBody User user) {
+    public UserDTO storeNewUser(@RequestBody UserDTO user) {
         return userService.storeNewUser(user);
     }
 

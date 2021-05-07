@@ -19,7 +19,9 @@ export class AuthenticationService {
         map(userData => {
           sessionStorage.setItem("username", username);
           let tokenStr = userData.token;
+          let userId = userData.userId;
           sessionStorage.setItem("token", tokenStr);
+          sessionStorage.setItem("userId", userId);
           return userData;
         })
       );

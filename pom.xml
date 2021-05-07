@@ -16,8 +16,8 @@
     </parent>
 
     <modules>
-        <module>backEnd</module>
         <module>frontEnd</module>
+        <module>backEnd</module>
     </modules>
 
     <properties>

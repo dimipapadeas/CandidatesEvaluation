@@ -7,6 +7,8 @@ import {EditUserComponent} from "./user/edit-user/edit-user.component";
 import {LoginComponent} from "./login/login.component";
 import {AuthGaurdService} from "./services/auth-gaurd.service";
 import {NewUserComponent} from "./user/new-user/new-user.component";
+import {AccountComponent} from "./account/account.component";
+import {TransactionComponent} from "./transaction/transaction.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -15,6 +17,9 @@ const routes: Routes = [
   {path: 'user', component: UserComponent, canActivate: [AuthGaurdService]},
   {path: 'newUser', component: NewUserComponent, canActivate: [AuthGaurdService]},
   {path: 'editUser/:id', component: EditUserComponent, canActivate: [AuthGaurdService]},
+  {path: 'viewAccount/:id', component: AccountComponent, canActivate: [AuthGaurdService]},
+  {path: 'addTransaction/:accountId', component: TransactionComponent, canActivate: [AuthGaurdService]},
+  {path: 'editTransaction/:transactionId', component: TransactionComponent, canActivate: [AuthGaurdService]},
   {path: 'about', component: AboutComponent},
 ];
 

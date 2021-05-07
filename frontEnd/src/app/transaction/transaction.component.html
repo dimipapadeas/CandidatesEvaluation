@@ -1,0 +1,58 @@
+<div style="padding: 15px;">
+  <form [formGroup]="form" (ngSubmit)="formSubmit(form)">
+
+    <div class="row form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control" id="description" placeholder="Description" formControlName="description">
+      <div *ngIf="form.get('description').errors?.required && form.get('description').dirty" class="text-danger">
+        Field is required
+      </div>
+      <div *ngIf="form.get('description').errors?.minlength && form.get('description').dirty" class="text-danger">
+        The minimum length of field is 3 characters
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label class="form-control-label">Type</label>
+      <select class="form-control" formControlName="type">
+        <option [ngValue]="null">Select</option>
+        <option *ngFor="let lang of types" [ngValue]="lang">
+          {{lang}}
+        </option>
+      </select>
+      <div *ngIf="form.get('type').invalid && form.get('type').dirty" class="text-danger">
+        Field is required
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label for="amount">Amount</label>
+      <input type="number" class="form-control" id="amount" placeholder="Amount" formControlName="amount">
+      <div *ngIf="form.get('amount').invalid && form.get('amount').dirty" class="text-danger">
+        Field is required
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label for="date">Date</label>
+      <input type="text" class="form-control" id="date" placeholder="Date" formControlName="date">
+      <div *ngIf="form.get('date').invalid && form.get('date').dirty" class="text-danger">
+        Field is required
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label for="accountName">Account</label>
+      <input type="text" class="form-control" id="accountName" formControlName="accountName">
+    </div>
+
+    <div class="row">
+      <div class="col-form-label">
+        <button mat-raised-button type="submit">Submit</button>
+      </div>
+      <div class="col-form-label">
+        <button mat-raised-button routerLink="/home">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -18,14 +18,18 @@ import java.util.Objects;
 @CrossOrigin
 public class JwtAuthenticationController {
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
+
+    private final UserRepository userRepository;
+
+    private final AuthRepository authRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private AuthRepository authRepository;
+    public JwtAuthenticationController(JwtTokenUtil jwtTokenUtil, UserRepository userRepository, AuthRepository authRepository) {
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userRepository = userRepository;
+        this.authRepository = authRepository;
+    }
 
     @RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
@@ -50,7 +54,7 @@ public class JwtAuthenticationController {
                 final String token = jwtTokenUtil.generateToken(user);
                 JWTToken storedToekn = new JWTToken(token, username);
                 authRepository.save(storedToekn);
-                return new JwtResponse(token);
+                return new JwtResponse(token, user.getId());
             } else {
                 throw new Exception("not Autherised");
             }
