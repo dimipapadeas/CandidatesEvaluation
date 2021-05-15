@@ -35,8 +35,9 @@ public class TransactionsService {
         this.mapper = mapper;
     }
 
-    public List<TransactionDTO> getAllFiltered(String sort, String page, String size, String description, String type, String userID) {
-        List<Transaction> allByUserId = transactionsRepository.getAllByUserId(1);
+    public List<TransactionDTO> getAllFiltered(String sort, String page, String size, String description, String type, String username) {
+        User user = userRepository.getUserByUsername(username);
+        List<Transaction> allByUserId = transactionsRepository.getAllByUserId(user.getId());
         return mapper.entityListToDTOList(allByUserId);
     }
 

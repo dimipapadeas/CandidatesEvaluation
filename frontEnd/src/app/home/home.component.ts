@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit {
   private userID: string;
 
   ngOnInit() {
+    this.userID = sessionStorage.getItem("username");
     this.createFilterForm();
     this.tableSort = '';
     this.filterValues = this.form.value;
