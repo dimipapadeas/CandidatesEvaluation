@@ -1,17 +1,26 @@
 package com.dterz.repositories;
 
 import com.dterz.model.Account;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import com.dterz.model.QAccount;
+import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Long> {
+@Transactional
+public class AccountRepository extends GenericRepository<Account> {
 
-    List<Account> findByUsers_Id(long userId);
+    public List<Account> findByUsers_Id(long userId) {
+        QAccount account = QAccount.account;
+        final JPAQuery<Account> query = new JPAQuery<>(entityManager);
+        return query.select(account).from(account).where(account.users.any().id.eq(userId)).fetch();
+    }
 
-    @Query("FROM Account WHERE description = ?1")
-    Account getUserByUsername(String description);
+    public Account getUserByUsername(String description) {
+        QAccount account = QAccount.account;
+        final JPAQuery<Account> query = new JPAQuery<>(entityManager);
+        return query.select(account).from(account).where(account.description.eq(description)).fetchFirst();
+    }
 }

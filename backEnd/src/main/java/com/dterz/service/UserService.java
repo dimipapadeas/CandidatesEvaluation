@@ -9,10 +9,11 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -31,15 +32,13 @@ public class UserService {
     }
 
     public UserDTO getUserById(long id) {
-        Optional<User> user = userRepository.findById(id);
-        return mapper.entityToDto(user.get());
+        User user = userRepository.read(id);
+        return mapper.entityToDto(user);
     }
 
     public UserDTO updateUser(UserDTO dto) {
-        User user;
-        Optional<User> oUser = userRepository.findById(dto.getId());
-        if (oUser.isPresent()) {
-            user = oUser.get();
+        User user = userRepository.read(dto.getId());
+        if (user != null) {
             mapper.dtoToEntity(dto, user);
         } else {
             user = mapper.dtoToEntity(dto);
@@ -49,7 +48,7 @@ public class UserService {
     }
 
     public void deleteUser(long id) {
-        userRepository.deleteById(id);
+        userRepository.delete(id);
     }
 
     public UserDTO createDraftUser(int count) {

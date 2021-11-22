@@ -1,15 +1,26 @@
 package com.dterz.repositories;
 
 import com.dterz.model.JWTToken;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import com.dterz.model.QJWTToken;
+import com.querydsl.jpa.impl.JPAQuery;
+import org.springframework.stereotype.Repository;
 
-public interface AuthRepository extends JpaRepository<JWTToken, Long> {
+import javax.transaction.Transactional;
 
-    @Query("SELECT token FROM JWTToken WHERE userName = ?1")
-    String getTokenByUsername(String userName);
+@Repository
+@Transactional
+public class AuthRepository extends GenericRepository<JWTToken> {
 
-    @Query(" FROM JWTToken WHERE userName = ?1")
-    JWTToken getJWTByUsername(String userName);
+    public String getTokenByUsername(String userName) {
+        QJWTToken token = QJWTToken.jWTToken;
+        final JPAQuery<JWTToken> query = new JPAQuery<>(entityManager);
+        return query.select(token.token).from(token).where(token.userName.eq(userName)).fetchFirst();
+    }
 
+
+    public JWTToken getJWTByUsername(String userName) {
+        QJWTToken token = QJWTToken.jWTToken;
+        final JPAQuery<JWTToken> query = new JPAQuery<>(entityManager);
+        return query.select(token).from(token).where(token.userName.eq(userName)).fetchFirst();
+    }
 }

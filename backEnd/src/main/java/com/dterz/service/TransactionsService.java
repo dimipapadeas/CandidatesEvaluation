@@ -12,11 +12,12 @@ import com.dterz.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class TransactionsService {
 
     private final TransactionsRepository transactionsRepository;
@@ -47,11 +48,11 @@ public class TransactionsService {
     }
 
     public void deleteTransaction(long transactionId) {
-        transactionsRepository.deleteById(transactionId);
+        transactionsRepository.delete(transactionId);
     }
 
     public TransactionDTO createDraftTransaction(String accountId) {
-        Account account = accountRepository.findById(Long.valueOf(accountId)).get();
+        Account account = accountRepository.read(Long.valueOf(accountId));
         Transaction draft = new Transaction();
         draft.setAccount(account);
         draft.setDate(new Date());
@@ -60,12 +61,10 @@ public class TransactionsService {
     }
 
     public TransactionDTO updateTransaction(TransactionDTO dto) {
-        Transaction transaction;
-        Optional<Transaction> trans = transactionsRepository.findById(dto.getId());
+        Transaction transaction = transactionsRepository.read(dto.getId());
         User user = userRepository.getUserByUsername(dto.getUserName());
         Account account = accountRepository.getUserByUsername(dto.getAccountName());
-        if (trans.isPresent()) {
-            transaction = trans.get();
+        if (transaction != null) {
             mapper.dtoToEntity(dto, transaction);
         } else {
             transaction = mapper.dtoToEntity(dto);
@@ -77,7 +76,7 @@ public class TransactionsService {
     }
 
     public TransactionDTO getTransactionIdById(long transactionId) {
-        Transaction transaction = transactionsRepository.findById(transactionId).get();
+        Transaction transaction = transactionsRepository.read(transactionId);
         return mapper.entityToDto(transaction);
     }
 }

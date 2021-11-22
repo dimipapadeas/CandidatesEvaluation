@@ -1,18 +1,26 @@
 package com.dterz.repositories;
 
+import com.dterz.model.QTransaction;
 import com.dterz.model.Transaction;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface TransactionsRepository extends JpaRepository<Transaction, Long> {
+@Transactional
+public class TransactionsRepository extends GenericRepository<Transaction> {
 
-    @Query("FROM Transaction WHERE user.id = ?1")
-    List<Transaction> getAllByUserId(long userId);
+    public List<Transaction> getAllByUserId(long userId) {
+        QTransaction transaction = QTransaction.transaction;
+        final JPAQuery<Transaction> query = new JPAQuery<>(entityManager);
+        return query.select(transaction).from(transaction).where(transaction.user.id.eq(userId)).fetch();
+    }
 
-    @Query("FROM Transaction WHERE account.id = ?1")
-    List<Transaction> getAllByAccountId(long accountId);
+    public List<Transaction> getAllByAccountId(long accountId) {
+        QTransaction transaction = QTransaction.transaction;
+        final JPAQuery<Transaction> query = new JPAQuery<>(entityManager);
+        return query.select(transaction).from(transaction).where(transaction.account.id.eq(accountId)).fetch();
+    }
 }
