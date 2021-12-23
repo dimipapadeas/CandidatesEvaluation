@@ -1,48 +1,26 @@
 package com.dterz.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class AccountDTO {
 
+    @Getter
+    @Setter
     private long id;
 
+    @Getter
+    @Setter
     private String description;
 
+    @Getter
+    @Setter
     private BigDecimal calculatedBalance;
 
+    @Getter
+    @Setter
     private Date lastTransaction;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getCalculatedBalance() {
-        return calculatedBalance;
-    }
-
-    public void setCalculatedBalance(BigDecimal calculatedBalance) {
-        this.calculatedBalance = calculatedBalance;
-    }
-
-    public Date getLastTransaction() {
-        return lastTransaction;
-    }
-
-    public void setLastTransaction(Date lastTransaction) {
-        this.lastTransaction = lastTransaction;
-    }
-
 }

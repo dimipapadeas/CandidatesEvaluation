@@ -1,84 +1,39 @@
 package com.dterz.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class UserDTO {
 
+    @Getter
+    @Setter
     private long id;
 
+    @Getter
+    @Setter
     private String uName;
 
+    @Getter
+    @Setter
     private String salt;
 
+    @Getter
+    @Setter
     private String pass;
 
+    @Getter
+    @Setter
     private String fName;
 
+    @Getter
+    @Setter
     private String sName;
 
+    @Getter
+    @Setter
     private String comments;
 
+    @Getter
+    @Setter
     private boolean superAdmin;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getuName() {
-        return uName;
-    }
-
-    public void setuName(String uName) {
-        this.uName = uName;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public String getfName() {
-        return fName;
-    }
-
-    public void setfName(String fName) {
-        this.fName = fName;
-    }
-
-    public String getsName() {
-        return sName;
-    }
-
-    public void setsName(String sName) {
-        this.sName = sName;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public boolean isSuperAdmin() {
-        return superAdmin;
-    }
-
-    public void setSuperAdmin(boolean superAdmin) {
-        this.superAdmin = superAdmin;
-    }
 }

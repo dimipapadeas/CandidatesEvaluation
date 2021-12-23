@@ -1,5 +1,8 @@
 package com.dterz.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,81 +13,40 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    @Setter
     private long id;
 
     @Column(name = "amount")
+    @Getter
+    @Setter
     private BigDecimal amount;
 
     @Column(name = "date")
+    @Getter
+    @Setter
     private Date date;
 
     @Column(name = "description")
+    @Getter
+    @Setter
     private String description;
 
     @Column(name = "type")
+    @Getter
+    @Setter
     private TransanctionType type;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_Id")
+    @Getter
+    @Setter
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "accountId")
+    @JoinColumn(name = "account_Id")
+    @Getter
+    @Setter
     private Account account;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public TransanctionType getType() {
-        return type;
-    }
-
-    public void setType(TransanctionType type) {
-        this.type = type;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }

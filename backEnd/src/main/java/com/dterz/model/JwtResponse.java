@@ -1,11 +1,20 @@
 package com.dterz.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 public class JwtResponse implements Serializable {
 
     private static final long serialVersionUID = -8091879091924046844L;
-    private final String jwttoken;
+
+    @Getter
+    @Setter
+    private String jwttoken;
+
+    @Getter
+    @Setter
     private long userId;
 
     public JwtResponse() {
@@ -18,15 +27,4 @@ public class JwtResponse implements Serializable {
         this.userId = userId;
     }
 
-    public String getToken() {
-        return this.jwttoken;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
 }

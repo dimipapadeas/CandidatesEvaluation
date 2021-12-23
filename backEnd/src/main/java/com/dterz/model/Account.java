@@ -1,5 +1,8 @@
 package com.dterz.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,71 +15,35 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    @Setter
     private long id;
 
     @Column(name = "description")
+    @Getter
+    @Setter
     private String description;
 
-    @Column(name = "calculatedBalance")
+    @Column(name = "calculated_balance")
+    @Getter
+    @Setter
     private BigDecimal calculatedBalance;
 
-    @Column(name = "lastTransaction")
+    @Column(name = "last_transaction")
+    @Getter
+    @Setter
     private Date lastTransaction;
 
     @ManyToMany
     @JoinTable(name = "ACCOUNT_USER",
             joinColumns = {@JoinColumn(name = "FK_account")},
             inverseJoinColumns = {@JoinColumn(name = "FK_user")})
+    @Getter
+    @Setter
     private Set<User> users;
 
     @OneToMany(mappedBy = "account")
+    @Getter
+    @Setter
     private List<Transaction> transactions;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getCalculatedBalance() {
-        return calculatedBalance;
-    }
-
-    public void setCalculatedBalance(BigDecimal calculatedBalance) {
-        this.calculatedBalance = calculatedBalance;
-    }
-
-    public Date getLastTransaction() {
-        return lastTransaction;
-    }
-
-    public void setLastTransaction(Date lastTransaction) {
-        this.lastTransaction = lastTransaction;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
-    }
 }
