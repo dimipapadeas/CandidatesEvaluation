@@ -1,5 +1,6 @@
 package com.dterz.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ public class UserDTO {
 
     @Getter
     @Setter
+    @JsonProperty("uName")
     private String uName;
 
     @Getter
@@ -23,10 +25,12 @@ public class UserDTO {
 
     @Getter
     @Setter
+    @JsonProperty("fName")
     private String fName;
 
     @Getter
     @Setter
+    @JsonProperty("sName")
     private String sName;
 
     @Getter
@@ -35,5 +39,6 @@ public class UserDTO {
 
     @Getter
     @Setter
+    @JsonProperty("superAdmin")
     private boolean superAdmin;
 }
