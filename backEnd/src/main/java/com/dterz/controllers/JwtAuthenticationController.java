@@ -23,11 +23,4 @@ public class JwtAuthenticationController {
         JwtResponse authenticate = authenticationService.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         return ResponseEntity.ok(authenticate);
     }
-
-    @DeleteMapping("/api/deleteToken/{username}")
-    public boolean deleteToken(@PathVariable("username") String username) {
-        authenticationService.deleteToken(username);
-        return true;
-    }
-
 }

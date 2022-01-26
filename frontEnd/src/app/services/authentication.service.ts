@@ -18,7 +18,7 @@ export class AuthenticationService {
       .pipe(
         map(userData => {
           sessionStorage.setItem("username", username);
-          let tokenStr = userData.token;
+          let tokenStr = userData.jwttoken;
           let userId = userData.userId;
           sessionStorage.setItem("token", tokenStr);
           sessionStorage.setItem("userId", userId);
@@ -28,15 +28,12 @@ export class AuthenticationService {
   }
 
   isUserLoggedIn() {
-    let user = sessionStorage.getItem("username");
-    return !(user === null);
+    let toekn = sessionStorage.getItem("token");
+    return !(toekn === null);
   }
 
   logOut() {
-    let username = sessionStorage.getItem("username");
-    this.httpClient.delete(`http://localhost:8080/api/deleteToken/${username}`).subscribe((data: any[]) => {
-      sessionStorage.removeItem("username");
-      sessionStorage.removeItem("token");
-    });
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("token");
   }
 }
