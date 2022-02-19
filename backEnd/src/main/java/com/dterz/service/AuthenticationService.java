@@ -30,6 +30,9 @@ public class AuthenticationService {
         Objects.requireNonNull(password);
         try {
             User user = userRepository.getUserByUsername(username);
+            if (user == null) {
+                throw new Exception("User not found");
+            }
             String saltedAndHashed = DigestUtils.sha256Hex(user.getSalt() + password);
             if (saltedAndHashed.equals(user.getPass())) {
                 final String token = jwtTokenUtil.generateToken(user);

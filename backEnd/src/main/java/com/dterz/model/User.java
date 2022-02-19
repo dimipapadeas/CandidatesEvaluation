@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "CLIENT_USER")
 public class User {
 
     @Id
@@ -52,10 +53,10 @@ public class User {
     @Setter
     private boolean superAdmin;
 
-    @OneToMany(mappedBy = "user")
     @Getter
     @Setter
-    private List<Transaction> transactions;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> transactions = new java.util.ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "USER_PERMISSION",
@@ -64,6 +65,14 @@ public class User {
     @Getter
     @Setter
     private Set<Permission> permissions;
+
+    @Getter
+    @Setter
+    @ManyToMany
+    @JoinTable(name = "ACCOUNT_USER",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"))
+    private Set<Account> accounts = new LinkedHashSet<>();
 
 
     public User() {

@@ -36,8 +36,8 @@ public class Account {
 
     @ManyToMany
     @JoinTable(name = "ACCOUNT_USER",
-            joinColumns = {@JoinColumn(name = "FK_account")},
-            inverseJoinColumns = {@JoinColumn(name = "FK_user")})
+            joinColumns = {@JoinColumn(name = "account_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
     @Getter
     @Setter
     private Set<User> users;
