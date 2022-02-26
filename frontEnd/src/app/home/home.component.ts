@@ -105,6 +105,28 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  public getaccounts(event) {
+    if (event.index == 1) {
+      this.getallAccounts().subscribe();
+    } else if (event.index == 0) {
+      this.getAccountsForUser().subscribe();
+    }
+
+  }
+
+  private getallAccounts() {
+    return this.accountService.getAllFiltered(null).pipe(
+      tap((response: any) => {
+        const accounts: any = response.body;
+        this.accountList = new MatTableDataSource(accounts);
+        const keys = response.headers.keys();
+        this.headersAccount = keys.map(key =>
+          response.headers.get(key));
+        this.dataLength = +this.headersAccount[3];
+      })
+    );
+  }
+
   private getAccountsForUser() {
     return this.accountService.getAllFiltered(this.userID).pipe(
       tap((response: any) => {

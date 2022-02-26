@@ -1,10 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
+import {User} from "./user.service";
+import {Observable} from "rxjs";
 
 export interface Account {
   id: string;
   calculatedBalance: number;
   description: String;
+  lastTransaction: Date;
+  users: [User];
 }
 
 @Injectable({
@@ -28,5 +32,13 @@ export class AccountService {
 
   getAccountById(accountId: any) {
     return this.httpClient.get<Account>(`${this.SERVER_URL + 'getAccountById'}/${accountId}`)
+  }
+
+  createDraftAccount() {
+    return this.httpClient.get<Account>(`${this.SERVER_URL + 'draftAccount'}`)
+  }
+
+  updateAccount(account: Account): Observable<Account> {
+    return this.httpClient.put<Account>(`${this.SERVER_URL + 'update'}`, account);
   }
 }

@@ -4,9 +4,10 @@ import {Transaction, TransactionService} from "../services/transaction.service";
 import {AccountService} from "../services/account.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSort} from "@angular/material/sort";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {tap} from "rxjs/operators";
+import {User} from "../services/user.service";
 
 @Component({
   selector: 'app-account',
@@ -16,6 +17,7 @@ import {tap} from "rxjs/operators";
 export class AccountComponent implements OnInit {
 
   displayedColumns: string[] = ['description', 'type', 'date', 'userName', 'amount', 'actions'];
+  displayedColumnsUser: string[] = ['fName', 'sName'];
 
   @Input() dataLength: number;
   @Input() dataPageIndex: number; // Which index is the current for the data paginator
@@ -33,6 +35,7 @@ export class AccountComponent implements OnInit {
   form: FormGroup;
   transactionList: MatTableDataSource<Transaction>;
   accountList: MatTableDataSource<Account>;
+  userList: MatTableDataSource<User>;
   headers: string[];
   pageIndex: string;
   pageSize: string;
@@ -47,7 +50,7 @@ export class AccountComponent implements OnInit {
     this.form = new FormGroup({
       id: new FormControl(null),
       calculatedBalance: new FormControl({value: '', disabled: true}),
-      description: new FormControl({value: '', disabled: true}),
+      description: new FormControl({value: '', disabled: this.paramId}, [Validators.required, Validators.minLength(3)]),
     });
 
     this.paramId = this.route.snapshot.params.id;
@@ -55,10 +58,15 @@ export class AccountComponent implements OnInit {
     if (this.paramId) {
       this.accountService.getAccountById(this.paramId).subscribe(response => {
         this.form.patchValue({...response});
+        this.userList = new MatTableDataSource(response.users);
       });
       this.tableSort = '';
       this.filterValues = this.form.value;
       this.getTransactionsForAccount(this.tableSort, '', this.dataPageSize.toString()).subscribe();
+    } else {
+      this.accountService.createDraftAccount().subscribe(response => {
+        this.form.patchValue({...response});
+      });
     }
   }
 
@@ -89,5 +97,17 @@ export class AccountComponent implements OnInit {
     this.transactionService.deleteTransaction(id).subscribe((data: any[]) => {
       this.getTransactionsForAccount(this.tableSort, '', this.dataPageSize.toString()).subscribe();
     });
+  }
+
+  formSubmit(form: FormGroup) {
+    if (form.valid) {
+      this.form.markAsPristine();
+      this.accountService.updateAccount(form.value).subscribe(response => {
+        this.router.navigate(['/viewAccount', response.id]);
+      });
+    } else {
+      form.markAsDirty();
+      alert("Form is invalid")
+    }
   }
 }

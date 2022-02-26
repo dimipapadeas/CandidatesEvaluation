@@ -36,6 +36,10 @@ export class EditUserComponent implements OnInit {
       this.userServie.getUserById(paramId).subscribe(response => {
         this.form.patchValue({...response});
       });
+    } else {
+      this.userServie.createDraftUser().subscribe(response => {
+        this.form.patchValue({...response});
+      });
     }
   }
 
@@ -46,5 +50,4 @@ export class EditUserComponent implements OnInit {
       this.router.navigate(['']);
     });
   }
-
 }

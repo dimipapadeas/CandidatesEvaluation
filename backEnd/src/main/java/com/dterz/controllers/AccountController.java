@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/account/")
+@CrossOrigin
 public class AccountController {
 
     Logger logger = LoggerFactory.getLogger(AccountController.class);
@@ -27,9 +28,18 @@ public class AccountController {
         return accountService.getAccountById(accountId);
     }
 
+    @GetMapping("draftAccount")
+    public AccountDTO getUserById() {
+        return accountService.draftAccount();
+    }
 
     @GetMapping("getAllFiltered")
     public List<AccountDTO> getUser(@RequestParam(name = "userID", defaultValue = "") String userID) {
         return accountService.getAllFiltered(userID);
+    }
+
+    @PutMapping("update")
+    public AccountDTO update(@RequestBody AccountDTO accountDTO) {
+        return accountService.updateAccount(accountDTO);
     }
 }

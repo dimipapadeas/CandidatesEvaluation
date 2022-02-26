@@ -2,7 +2,6 @@ package com.dterz.mappers;
 
 import com.dterz.dtos.AccountDTO;
 import com.dterz.model.Account;
-import com.dterz.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
@@ -13,7 +12,7 @@ public interface AccountMapper {
 
     AccountDTO entityToDto(Account entity);
 
-    User dtoToEntity(AccountDTO dto);
+    Account dtoToEntity(AccountDTO dto);
 
     void dtoToEntity(AccountDTO dto, @MappingTarget Account entity);
 

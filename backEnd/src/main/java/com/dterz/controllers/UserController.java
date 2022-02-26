@@ -2,6 +2,8 @@ package com.dterz.controllers;
 
 import com.dterz.dtos.UserDTO;
 import com.dterz.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/user/")
+@CrossOrigin
 public class UserController {
+
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private UserService userService;
 
@@ -25,6 +30,7 @@ public class UserController {
 
     @GetMapping("getUserById/{userId}")
     public UserDTO getUserById(@PathVariable("userId") long userId) {
+        logger.debug("Called: getuser with {}", userId);
         return userService.getUserById(userId);
     }
 

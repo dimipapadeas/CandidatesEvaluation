@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/transactions/")
+@CrossOrigin
 public class TransactionsController {
 
     Logger logger = LoggerFactory.getLogger(TransactionsController.class);

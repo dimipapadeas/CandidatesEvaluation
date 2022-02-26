@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 public class AccountDTO {
 
@@ -23,4 +24,8 @@ public class AccountDTO {
     @Getter
     @Setter
     private Date lastTransaction;
+
+    @Getter
+    @Setter
+    private Set<UserDTO> users;
 }
