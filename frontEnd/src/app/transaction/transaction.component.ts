@@ -43,7 +43,7 @@ export class TransactionComponent implements OnInit {
 
   formSubmit(form: FormGroup) {
     if (form.valid) {
-      this.transaction = form.value;
+      this.transaction = form.getRawValue();
       this.transaction.userName = sessionStorage.getItem('username');
       this.form.markAsPristine();
       this.transactionService.updateTransaction(this.transaction).subscribe(response => {
