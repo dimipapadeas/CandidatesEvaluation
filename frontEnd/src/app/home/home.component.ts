@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
   }
 
   private getallAccounts() {
-    return this.accountService.getAllFiltered(null).pipe(
+    return this.accountService.getByUsername(null).pipe(
       tap((response: any) => {
         const accounts: any = response.body;
         this.accountList = new MatTableDataSource(accounts);
@@ -128,7 +128,7 @@ export class HomeComponent implements OnInit {
   }
 
   private getAccountsForUser() {
-    return this.accountService.getAllFiltered(this.userID).pipe(
+    return this.accountService.getByUsername(this.userID).pipe(
       tap((response: any) => {
         const accounts: any = response.body;
         this.accountList = new MatTableDataSource(accounts);

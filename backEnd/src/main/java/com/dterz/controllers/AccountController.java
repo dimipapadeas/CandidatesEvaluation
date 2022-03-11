@@ -33,9 +33,9 @@ public class AccountController {
         return accountService.draftAccount();
     }
 
-    @GetMapping("getAllFiltered")
-    public List<AccountDTO> getUser(@RequestParam(name = "userID", defaultValue = "") String userID) {
-        return accountService.getAllFiltered(userID);
+    @GetMapping("getByUsername")
+    public List<AccountDTO> getByUsername(@RequestParam(name = "userID", defaultValue = "") String userID) {
+        return accountService.getByUsername(userID);
     }
 
     @PutMapping("update")

@@ -33,7 +33,7 @@ public class AccountService {
         this.mapper = mapper;
     }
 
-    public List<AccountDTO> getAllFiltered(String username) {
+    public List<AccountDTO> getByUsername(String username) {
         User user = userRepository.getUserByUsername(username);
         List<Account> acountList = null;
         if (user != null) {
@@ -66,7 +66,8 @@ public class AccountService {
     }
 
     public AccountDTO draftAccount() {
-        return new AccountDTO();
+        Account account = new Account();
+        return mapper.entityToDto(account);
     }
 
     public AccountDTO updateAccount(AccountDTO accountDTO) {
