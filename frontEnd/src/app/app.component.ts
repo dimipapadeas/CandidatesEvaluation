@@ -12,7 +12,7 @@ export class AppComponent {
   }
 
   title = 'Spring Boot Angular Template';
-  username = sessionStorage.getItem("username");
+  username = '';
 
   logout() {
     this.loginservice.logOut();
@@ -20,6 +20,7 @@ export class AppComponent {
   }
 
   isloggedIn() {
+    this.username = sessionStorage.getItem("username");
     return this.loginservice.isUserLoggedIn();
   }
 
