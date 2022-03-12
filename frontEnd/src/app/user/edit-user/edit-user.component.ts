@@ -16,6 +16,7 @@ export class EditUserComponent implements OnInit {
   }
 
   public user: User;
+  public isDraft: boolean;
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -29,6 +30,7 @@ export class EditUserComponent implements OnInit {
       superAdmin: new FormControl(null),
       permissions: new FormArray([])
     });
+    this.isDraft = false;
 
     const paramId = this.route.snapshot.params.id;
 
@@ -39,6 +41,7 @@ export class EditUserComponent implements OnInit {
     } else {
       this.userServie.createDraftUser().subscribe(response => {
         this.form.patchValue({...response});
+        this.isDraft = true;
       });
     }
   }

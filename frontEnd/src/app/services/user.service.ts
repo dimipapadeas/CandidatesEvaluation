@@ -43,8 +43,4 @@ export class UserService {
   createDraftUser() {
     return this.httpClient.get<User>(`${this.SERVER_URL + 'createDraftUser'}`)
   }
-
-  storeNewUser(user: User): Observable<User> {
-    return this.httpClient.put<User>(`${this.SERVER_URL + 'storeNewUser'}`, user);
-  }
 }

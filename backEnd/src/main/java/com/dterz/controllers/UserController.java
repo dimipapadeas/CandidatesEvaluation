@@ -41,12 +41,7 @@ public class UserController {
 
     @GetMapping("createDraftUser")
     public UserDTO createDraftUser() {
-        return userService.createDraftUser(7);
-    }
-
-    @PutMapping("storeNewUser")
-    public UserDTO storeNewUser(@RequestBody UserDTO user) {
-        return userService.storeNewUser(user);
+        return userService.createDraftUser();
     }
 
     @DeleteMapping("delete/{userId}")

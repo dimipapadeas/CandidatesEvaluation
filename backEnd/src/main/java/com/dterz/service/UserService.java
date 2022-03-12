@@ -42,6 +42,7 @@ public class UserService {
             mapper.dtoToEntity(dto, user);
         } else {
             user = mapper.dtoToEntity(dto);
+            user.setPass(DigestUtils.sha256Hex(dto.getSalt() + dto.getPass()));
         }
         userRepository.save(user);
         return mapper.entityToDto(user);
@@ -51,20 +52,26 @@ public class UserService {
         userRepository.delete(id);
     }
 
-    public UserDTO createDraftUser(int count) {
+    public UserDTO createDraftUser() {
         User draftUser = new User();
-        StringBuilder builder = new StringBuilder();
-        while (count-- != 0) {
-            int character = (int) (Math.random() * Constants.ALPHA_NUMERIC_STRING.length());
-            builder.append(Constants.ALPHA_NUMERIC_STRING.charAt(character));
-        }
-        draftUser.setSalt(builder.toString());
+        draftUser.setSalt(createSalt());
         return mapper.entityToDto(draftUser);
     }
 
     public UserDTO storeNewUser(UserDTO user) {
         user.setPass(DigestUtils.sha256Hex(user.getSalt() + user.getPass()));
         return this.updateUser(user);
+    }
+
+
+    private String createSalt() {
+        int count = 7;
+        StringBuilder builder = new StringBuilder();
+        while (count-- != 0) {
+            int character = (int) (Math.random() * Constants.ALPHA_NUMERIC_STRING.length());
+            builder.append(Constants.ALPHA_NUMERIC_STRING.charAt(character));
+        }
+        return builder.toString();
     }
 
 }

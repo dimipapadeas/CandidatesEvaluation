@@ -2,6 +2,19 @@
   <form [formGroup]="form" (ngSubmit)="formSubmit(form)">
 
     <div class="row form-group">
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <button mat-icon-button title="Save" type="submit">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <button mat-icon-button title="Cacnel" routerLink="/user">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="row form-group">
       <div class="col-sm-2 col-md-2 col-lg-2">
         <label for="titleInput">Username</label>
       </div>
@@ -19,8 +32,11 @@
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
         <input type="text" class="form-control" id="fName" placeholder="Enter Firstname" formControlName="fName">
-        <div *ngIf="form.get('fName').invalid && form.get('fName').dirty" class="text-danger">
+        <div *ngIf="form.get('fName').errors?.required && form.get('fName').dirty" class="text-danger">
           Field is required
+        </div>
+        <div *ngIf="form.get('fName').errors?.minlength && form.get('fName').dirty" class="text-danger">
+          The minimum length of field is 3 characters
         </div>
       </div>
     </div>
@@ -44,6 +60,23 @@
       </div>
     </div>
 
+    <div class="row form-group" *ngIf="isDraft">
+      <div class="col-sm-2 col-md-2 col-lg-2">
+        <label for="password">Password</label>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <input type="password" class="form-control" id="password" placeholder="Password" formControlName="pass">
+        <div *ngIf="form.get('pass').errors?.required && form.get('pass').dirty" class="text-danger">
+          Field is required
+        </div>
+        <div *ngIf="form.get('pass').errors?.minlength && form.get('pass').dirty" class="text-danger">
+          The minimum length of field is 3 characters
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+      </div>
+    </div>
+
 
     <div class="row form-group">
       <div class="col-sm-2 col-md-2 col-lg-2">
@@ -52,15 +85,7 @@
       <div class="col-sm-4 col-md-4 col-lg-4">
         <input type="checkbox" class="form-control" id="superAdmin" formControlName="superAdmin">
       </div>
-    </div>
-
-
-    <div class="row">
-      <div class="col-form-label">
-        <button mat-raised-button type="submit">Submit</button>
-      </div>
-      <div class="col-form-label">
-        <button mat-raised-button routerLink="/user">Cancel</button>
+      <div class="col-sm-6 col-md-6 col-lg-6">
       </div>
     </div>
   </form>
