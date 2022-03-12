@@ -117,8 +117,11 @@
             VALUES (1, '', 'admin', 'def1de41e3e48eff838277272a8f0e5bf9ad6d5807a0905afb76e40490d9da2c', 'admin',
                     'QB5Y2AU', true, 'admin');
             INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
-            VALUES (2, '', 'user', 'fb0350ddffca2e6fb1dce0ad47fb99bf42305b549d3389948ed360e5ae607365', 'user',
+            VALUES (2, '', 'user_1', 'fb0350ddffca2e6fb1dce0ad47fb99bf42305b549d3389948ed360e5ae607365', 'user_1',
                     'IYXN2LC', false, 'user1');
+            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
+            VALUES (3, '', 'user_2', 'b26a106c549574886938f62b4ca22beb8a76f0fe6d36a65703fd7981e8071d2b', 'user_2',
+                    'PGR4AJD', false, 'user2');
 
             INSERT INTO ACCOUNT (ID, DESCRIPTION, CALCULATED_BALANCE, LAST_TRANSACTION)
             VALUES (1, 'Account 1 Savings', null, null);
