@@ -1,6 +1,7 @@
 package com.dterz.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,39 +12,30 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ACCOUNT")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private long id;
 
     @Column(name = "description")
-    @Getter
-    @Setter
     private String description;
 
     @Column(name = "calculated_balance")
-    @Getter
-    @Setter
     private BigDecimal calculatedBalance;
 
     @Column(name = "last_transaction")
-    @Getter
-    @Setter
     private Date lastTransaction;
 
     @ManyToMany
     @JoinTable(name = "ACCOUNT_USER",
             joinColumns = {@JoinColumn(name = "account_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    @Getter
-    @Setter
     private Set<User> users;
 
     @OneToMany(mappedBy = "account")
-    @Getter
-    @Setter
     private List<Transaction> transactions;
 }
