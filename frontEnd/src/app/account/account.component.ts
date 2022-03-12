@@ -47,13 +47,13 @@ export class AccountComponent implements OnInit {
   paramId: string;
 
   ngOnInit() {
+    this.paramId = this.route.snapshot.params.id;
     this.form = new FormGroup({
       id: new FormControl(null),
       calculatedBalance: new FormControl({value: '', disabled: true}),
       description: new FormControl({value: '', disabled: this.paramId}, [Validators.required, Validators.minLength(3)]),
     });
 
-    this.paramId = this.route.snapshot.params.id;
 
     if (this.paramId) {
       this.accountService.getAccountById(this.paramId).subscribe(response => {
@@ -102,12 +102,16 @@ export class AccountComponent implements OnInit {
   formSubmit(form: FormGroup) {
     if (form.valid) {
       this.form.markAsPristine();
-      this.accountService.updateAccount(form.value).subscribe(response => {
-        this.router.navigate(['/viewAccount', response.id]);
+      this.accountService.updateAccount(form.getRawValue()).subscribe(response => {
+        this.router.navigate(['']);
       });
     } else {
       form.markAsDirty();
       alert("Form is invalid")
     }
+  }
+
+  addUser() {
+    alert("add user");
   }
 }

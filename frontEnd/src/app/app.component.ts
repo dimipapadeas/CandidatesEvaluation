@@ -12,6 +12,7 @@ export class AppComponent {
   }
 
   title = 'Spring Boot Angular Template';
+  username = sessionStorage.getItem("username");
 
   logout() {
     this.loginservice.logOut();

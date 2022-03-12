@@ -1,5 +1,18 @@
-<div style="padding: 15px;">
+<div class="mainContent">
   <form [formGroup]="form" (ngSubmit)="formSubmit(form)">
+
+    <div class="row form-group">
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <button mat-icon-button title="Save" type="submit">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <button mat-icon-button title="Cacnel" routerLink="/home">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </div>
 
     <div class="row form-group">
       <div class="col-sm-2 col-md-2 col-lg-2">
@@ -62,15 +75,5 @@
       <div class="col-sm-2 col-md-2 col-lg-2"></div>
       <div class="col-sm-4 col-md-4 col-lg-4"></div>
     </div>
-
-    <div class="row">
-      <div class="col-sm-1 col-md-1 col-lg-1">
-        <button mat-raised-button color="primary" type="submit">Submit</button>
-      </div>
-      <div class="col-sm-1 col-md-1 col-lg-1">
-        <button mat-raised-button routerLink="/home">Cancel</button>
-      </div>
-    </div>
-
   </form>
 </div>
