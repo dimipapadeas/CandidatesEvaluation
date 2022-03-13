@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {Transaction, TransactionService} from "../services/transaction.service";
-import {AccountService} from "../services/account.service";
+import {Account, AccountService} from "../services/account.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSort} from "@angular/material/sort";
 import {FormControl, FormGroup, Validators} from "@angular/forms";

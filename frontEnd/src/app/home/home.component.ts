@@ -5,7 +5,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {Transaction, TransactionService} from "../services/transaction.service";
 import {tap} from "rxjs/operators";
-import {AccountService} from "../services/account.service";
+import {Account, AccountService} from "../services/account.service";
 import {Router} from "@angular/router";
 
 @Component({
