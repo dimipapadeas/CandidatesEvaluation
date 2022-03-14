@@ -5,6 +5,7 @@ import com.dterz.dtos.UserDTO;
 import com.dterz.mappers.UserMapper;
 import com.dterz.model.User;
 import com.dterz.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,17 +15,11 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
     private final UserMapper mapper;
-
-    @Autowired
-    public UserService(UserRepository userRepository, UserMapper mapper) {
-        this.userRepository = userRepository;
-        this.mapper = mapper;
-    }
 
     public List<UserDTO> getAllUsers() {
         List<User> userList = userRepository.findAll();

@@ -2,6 +2,7 @@ package com.dterz.controllers;
 
 import com.dterz.dtos.AccountDTO;
 import com.dterz.service.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,12 @@ import java.util.List;
 @RestController
 @RequestMapping("api/account/")
 @CrossOrigin
+@RequiredArgsConstructor
 public class AccountController {
 
     Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     private final AccountService accountService;
-
-    @Autowired
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
 
     @GetMapping("getAccountById/{accountId}")
     public AccountDTO getUserById(@PathVariable("accountId") long accountId) {

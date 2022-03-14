@@ -4,6 +4,7 @@ import com.dterz.config.JwtTokenUtil;
 import com.dterz.model.JwtResponse;
 import com.dterz.model.User;
 import com.dterz.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,17 +14,11 @@ import java.util.Objects;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AuthenticationService {
 
     private final JwtTokenUtil jwtTokenUtil;
-
     private final UserRepository userRepository;
-
-    @Autowired
-    public AuthenticationService(JwtTokenUtil jwtTokenUtil, UserRepository userRepository) {
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.userRepository = userRepository;
-    }
 
     public JwtResponse authenticate(String username, String password) throws Exception {
         Objects.requireNonNull(username);

@@ -10,6 +10,7 @@ import com.dterz.repositories.AccountRepository;
 import com.dterz.repositories.TransactionsRepository;
 import com.dterz.repositories.UserRepository;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,23 +20,13 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TransactionsService {
 
     private final TransactionsRepository transactionsRepository;
-
     private final AccountRepository accountRepository;
-
     private final UserRepository userRepository;
-
     private final TransactionMapper mapper;
-
-    @Autowired
-    public TransactionsService(TransactionsRepository transactionsRepository, AccountRepository accountRepository, UserRepository userRepository, TransactionMapper mapper) {
-        this.transactionsRepository = transactionsRepository;
-        this.accountRepository = accountRepository;
-        this.userRepository = userRepository;
-        this.mapper = mapper;
-    }
 
     public List<TransactionDTO> getAllFiltered(String sort, String page, String size, String description, String type, String username) {
         User user = userRepository.findByUsername(username);

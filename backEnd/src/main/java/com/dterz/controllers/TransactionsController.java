@@ -2,6 +2,7 @@ package com.dterz.controllers;
 
 import com.dterz.dtos.TransactionDTO;
 import com.dterz.service.TransactionsService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,12 @@ import java.util.List;
 @RestController
 @RequestMapping("api/transactions/")
 @CrossOrigin
+@RequiredArgsConstructor
 public class TransactionsController {
 
     Logger logger = LoggerFactory.getLogger(TransactionsController.class);
 
     private final TransactionsService transactionsService;
-
-    @Autowired
-    public TransactionsController(TransactionsService transactionsService) {
-        this.transactionsService = transactionsService;
-    }
 
     @DeleteMapping("delete/{transactionId}")
     public void delete(@PathVariable("transactionId") long transactionId) {

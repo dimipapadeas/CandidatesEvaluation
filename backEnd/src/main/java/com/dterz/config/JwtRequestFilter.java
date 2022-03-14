@@ -3,6 +3,7 @@ package com.dterz.config;
 import com.dterz.model.User;
 import com.dterz.repositories.UserRepository;
 import io.jsonwebtoken.ExpiredJwtException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -14,17 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final UserRepository userRepository;
-
     private final JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    public JwtRequestFilter(UserRepository userRepository, JwtTokenUtil jwtTokenUtil) {
-        this.userRepository = userRepository;
-        this.jwtTokenUtil = jwtTokenUtil;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {

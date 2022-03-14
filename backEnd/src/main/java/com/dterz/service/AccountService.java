@@ -10,6 +10,7 @@ import com.dterz.repositories.AccountRepository;
 import com.dterz.repositories.UserRepository;
 import java.util.Optional;
 import liquibase.repackaged.org.apache.commons.collections4.CollectionUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,20 +20,12 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AccountService {
 
     private final AccountRepository accountRepository;
-
     private final AccountMapper mapper;
-
     private final UserRepository userRepository;
-
-    @Autowired
-    public AccountService(AccountRepository accountRepository, UserRepository userRepository, AccountMapper mapper) {
-        this.accountRepository = accountRepository;
-        this.userRepository = userRepository;
-        this.mapper = mapper;
-    }
 
     public List<AccountDTO> getByUsername(String username) {
         User user = userRepository.findByUsername(username);
