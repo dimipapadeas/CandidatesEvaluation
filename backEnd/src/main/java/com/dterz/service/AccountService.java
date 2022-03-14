@@ -11,7 +11,6 @@ import com.dterz.repositories.UserRepository;
 import java.util.Optional;
 import liquibase.repackaged.org.apache.commons.collections4.CollectionUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

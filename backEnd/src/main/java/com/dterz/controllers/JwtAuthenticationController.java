@@ -4,7 +4,6 @@ import com.dterz.model.JwtRequest;
 import com.dterz.model.JwtResponse;
 import com.dterz.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

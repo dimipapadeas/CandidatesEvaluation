@@ -3,9 +3,6 @@ package com.dterz.controllers;
 import com.dterz.dtos.TransactionDTO;
 import com.dterz.service.TransactionsService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +12,6 @@ import java.util.List;
 @CrossOrigin
 @RequiredArgsConstructor
 public class TransactionsController {
-
-    Logger logger = LoggerFactory.getLogger(TransactionsController.class);
 
     private final TransactionsService transactionsService;
 
