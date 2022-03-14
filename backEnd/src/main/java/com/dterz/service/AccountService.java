@@ -8,6 +8,7 @@ import com.dterz.model.TransanctionType;
 import com.dterz.model.User;
 import com.dterz.repositories.AccountRepository;
 import com.dterz.repositories.UserRepository;
+import java.util.Optional;
 import liquibase.repackaged.org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,12 +35,12 @@ public class AccountService {
     }
 
     public List<AccountDTO> getByUsername(String username) {
-        User user = userRepository.getUserByUsername(username);
+        User user = userRepository.findByUsername(username);
         List<Account> acountList = null;
         if (user != null) {
             acountList = accountRepository.findByUsers_Id(user.getId());
         } else {
-            acountList = accountRepository.getAll();
+            acountList = accountRepository.findAll();
         }
         acountList.forEach(this::calcBalance);
         return mapper.entityListToDTOList(acountList);
@@ -60,7 +61,7 @@ public class AccountService {
     }
 
     public AccountDTO getAccountById(long accountId) {
-        Account account = accountRepository.read(accountId);
+        Account account = accountRepository.findById(accountId).get();
         calcBalance(account);
         return mapper.entityToDto(account);
     }
@@ -72,8 +73,10 @@ public class AccountService {
 
     public AccountDTO updateAccount(AccountDTO accountDTO) {
 
-        Account account = accountRepository.read(accountDTO.getId());
-        if (account != null) {
+        Optional<Account> accountOpt = accountRepository.findById(accountDTO.getId());
+        Account account;
+        if (accountOpt.isPresent()) {
+            account = accountOpt.get();
             mapper.dtoToEntity(accountDTO, account);
         } else {
             account = mapper.dtoToEntity(accountDTO);

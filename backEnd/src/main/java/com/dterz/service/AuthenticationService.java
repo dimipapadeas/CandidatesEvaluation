@@ -29,7 +29,7 @@ public class AuthenticationService {
         Objects.requireNonNull(username);
         Objects.requireNonNull(password);
         try {
-            User user = userRepository.getUserByUsername(username);
+            User user = userRepository.findByUsername(username);
             if (user == null) {
                 throw new Exception("User not found");
             }

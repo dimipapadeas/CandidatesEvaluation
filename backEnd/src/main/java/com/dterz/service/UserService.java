@@ -32,12 +32,12 @@ public class UserService {
     }
 
     public UserDTO getUserById(long id) {
-        User user = userRepository.read(id);
+        User user = userRepository.findById(id).get();
         return mapper.entityToDto(user);
     }
 
     public UserDTO updateUser(UserDTO dto) {
-        User user = userRepository.read(dto.getId());
+        User user = userRepository.findById(dto.getId()).get();
         if (user != null) {
             mapper.dtoToEntity(dto, user);
         } else {

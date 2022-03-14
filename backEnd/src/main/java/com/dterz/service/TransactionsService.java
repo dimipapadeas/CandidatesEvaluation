@@ -9,6 +9,7 @@ import com.dterz.model.User;
 import com.dterz.repositories.AccountRepository;
 import com.dterz.repositories.TransactionsRepository;
 import com.dterz.repositories.UserRepository;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,13 +38,13 @@ public class TransactionsService {
     }
 
     public List<TransactionDTO> getAllFiltered(String sort, String page, String size, String description, String type, String username) {
-        User user = userRepository.getUserByUsername(username);
-        List<Transaction> allByUserId = transactionsRepository.getAllByUserId(user.getId());
+        User user = userRepository.findByUsername(username);
+        List<Transaction> allByUserId = transactionsRepository.findByUserId(user.getId());
         return mapper.entityListToDTOList(allByUserId);
     }
 
     public List<TransactionDTO> getAllForAccount(String sort, String page, String size, String accountId) {
-        List<Transaction> allByAccountId = transactionsRepository.getAllByAccountId(Long.parseLong(accountId));
+        List<Transaction> allByAccountId = transactionsRepository.findByAccountId(Long.parseLong(accountId));
         return mapper.entityListToDTOList(allByAccountId);
     }
 
@@ -52,7 +53,7 @@ public class TransactionsService {
     }
 
     public TransactionDTO createDraftTransaction(String accountId) {
-        Account account = accountRepository.read(Long.valueOf(accountId));
+        Account account = accountRepository.findById(Long.valueOf(accountId)).get();
         Transaction draft = new Transaction();
         draft.setAccount(account);
         draft.setDate(new Date());
@@ -61,10 +62,13 @@ public class TransactionsService {
     }
 
     public TransactionDTO updateTransaction(TransactionDTO dto) {
-        Transaction transaction = transactionsRepository.read(dto.getId());
-        User user = userRepository.getUserByUsername(dto.getUserName());
-        Account account = accountRepository.getUserByUsername(dto.getAccountName());
-        if (transaction != null) {
+        Optional<Transaction> transactionOpt = transactionsRepository.findById(dto.getId());
+        Transaction transaction;
+
+        User user = userRepository.findByUsername(dto.getUserName());
+        Account account = accountRepository.findByDescription(dto.getAccountName());
+        if (transactionOpt.isPresent()) {
+            transaction = transactionOpt.get();
             mapper.dtoToEntity(dto, transaction);
         } else {
             transaction = mapper.dtoToEntity(dto);
@@ -76,7 +80,7 @@ public class TransactionsService {
     }
 
     public TransactionDTO getTransactionIdById(long transactionId) {
-        Transaction transaction = transactionsRepository.read(transactionId);
+        Transaction transaction = transactionsRepository.findById(transactionId).get();
         return mapper.entityToDto(transaction);
     }
 }
