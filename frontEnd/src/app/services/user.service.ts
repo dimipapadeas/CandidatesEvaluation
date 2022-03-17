@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {environment} from "../../environments/environment";
 
 export interface User {
   id: string;
@@ -19,28 +20,27 @@ export interface User {
 })
 export class UserService {
 
-  private SERVER_URL = "http://localhost:8080/api/user/";
 
   constructor(private httpClient: HttpClient) {
   }
 
   public getAll() {
-    return this.httpClient.get(this.SERVER_URL + 'getAll')
+    return this.httpClient.get(environment.apiUrl + '/user/getAll')
   }
 
   getUserById(userId: any) {
-    return this.httpClient.get<User>(`${this.SERVER_URL + 'getUserById'}/${userId}`)
+    return this.httpClient.get<User>(`${environment.apiUrl + '/user/getUserById'}/${userId}`)
   }
 
   updateUser(user: User): Observable<User> {
-    return this.httpClient.put<User>(`${this.SERVER_URL + 'update'}`, user);
+    return this.httpClient.put<User>(`${environment.apiUrl + '/user/update'}`, user);
   }
 
   deleteUser(userId: any) {
-    return this.httpClient.delete(`${this.SERVER_URL + 'delete'}/${userId}`);
+    return this.httpClient.delete(`${environment.apiUrl + '/user/delete'}/${userId}`);
   }
 
   createDraftUser() {
-    return this.httpClient.get<User>(`${this.SERVER_URL + 'createDraftUser'}`)
+    return this.httpClient.get<User>(`${environment.apiUrl + '/user/createDraftUser'}`)
   }
 }

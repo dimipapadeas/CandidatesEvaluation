@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {environment} from "../../environments/environment";
 
 export interface Transaction {
   id: string;
@@ -17,14 +18,12 @@ export interface Transaction {
 })
 export class TransactionService {
 
-  private SERVER_URL = "http://localhost:8080/api/transactions/";
-
   constructor(private httpClient: HttpClient) {
   }
 
   getAllFiltered(sort: string, page: string, size: string, description: string, type: string, userID: string) {
     return this.httpClient.get(
-      this.SERVER_URL + 'getAllFiltered', {
+      environment.apiUrl + '/transactions/getAllFiltered', {
         observe: 'response',
         params: new HttpParams()
           .set('sort', sort)
@@ -38,7 +37,7 @@ export class TransactionService {
 
   getAllForAccount(sort: string, page: string, size: string, accountId: string) {
     return this.httpClient.get(
-      this.SERVER_URL + 'getAllForAccount', {
+      environment.apiUrl + '/transactions/getAllForAccount', {
         observe: 'response',
         params: new HttpParams()
           .set('sort', sort)
@@ -49,18 +48,18 @@ export class TransactionService {
   }
 
   deleteTransaction(transactionId) {
-    return this.httpClient.delete(`${this.SERVER_URL + 'delete'}/${transactionId}`);
+    return this.httpClient.delete(`${environment.apiUrl + '/transactions/delete'}/${transactionId}`);
   }
 
   updateTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.httpClient.put<Transaction>(`${this.SERVER_URL + 'update'}`, transaction);
+    return this.httpClient.put<Transaction>(`${environment.apiUrl + '/transactions/update'}`, transaction);
   }
 
   createDraftTransaction(accountId) {
-    return this.httpClient.get<Transaction>(`${this.SERVER_URL + 'createDraftTransaction'}/${accountId}`)
+    return this.httpClient.get<Transaction>(`${environment.apiUrl + '/transactions/createDraftTransaction'}/${accountId}`)
   }
 
   getTransactionById(transactionId: any) {
-    return this.httpClient.get<Transaction>(`${this.SERVER_URL + 'getTransactionIdById'}/${transactionId}`)
+    return this.httpClient.get<Transaction>(`${environment.apiUrl + '/transactions/getTransactionIdById'}/${transactionId}`)
   }
 }
