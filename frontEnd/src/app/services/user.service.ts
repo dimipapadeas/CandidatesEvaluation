@@ -4,11 +4,11 @@ import {Observable} from "rxjs";
 
 export interface User {
   id: string;
-  uName: string;
+  userName: string;
   salt: string;
   pass: string;
-  fName: string;
-  sName: string;
+  fistName: string;
+  surName: string;
   comments: string;
   superAdmin: boolean;
   permissions: any[];

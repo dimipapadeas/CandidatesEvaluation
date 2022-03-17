@@ -21,9 +21,9 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       id: new FormControl(null),
-      uName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-      fName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-      sName: new FormControl(null, Validators.required),
+      userName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      fistName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      surName: new FormControl(null, Validators.required),
       comments: new FormControl(null),
       salt: new FormControl(null),
       pass: new FormControl(null, Validators.required),

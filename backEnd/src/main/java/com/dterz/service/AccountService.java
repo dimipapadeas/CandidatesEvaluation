@@ -8,7 +8,6 @@ import com.dterz.model.TransanctionType;
 import com.dterz.model.User;
 import com.dterz.repositories.AccountRepository;
 import com.dterz.repositories.UserRepository;
-import java.util.Optional;
 import liquibase.repackaged.org.apache.commons.collections4.CollectionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,8 +27,8 @@ public class AccountService {
     private final UserRepository userRepository;
 
     public List<AccountDTO> getByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        List<Account> acountList = null;
+        User user = userRepository.findByUserName(username);
+        List<Account> acountList;
         if (user != null) {
             acountList = accountRepository.findByUsers_Id(user.getId());
         } else {

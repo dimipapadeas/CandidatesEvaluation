@@ -13,7 +13,7 @@ import java.util.List;
 public interface TransactionMapper {
 
     @Mappings({
-            @Mapping(target = "userName", source = "user.UName"),
+            @Mapping(target = "userName", source = "user.userName"),
             @Mapping(target = "accountName", source = "account.description"),
     })
     TransactionDTO entityToDto(Transaction entity);

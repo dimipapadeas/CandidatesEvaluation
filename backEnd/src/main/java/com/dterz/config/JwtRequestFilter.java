@@ -4,7 +4,6 @@ import com.dterz.model.User;
 import com.dterz.repositories.UserRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -43,7 +42,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         //Once we get the token validate it.
         if (username != null) {
 
-            User user = this.userRepository.findByUsername(username);
+            User user = this.userRepository.findByUserName(username);
 
             // if token is valid configure Spring Security to manually set authentication
             if (jwtTokenUtil.validateToken(jwtToken, username)) {

@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
+
 public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -2550185165626007488L;
@@ -52,7 +53,7 @@ public class JwtTokenUtil implements Serializable {
 
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, user.getUName());
+        return doGenerateToken(claims, user.getUserName());
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {

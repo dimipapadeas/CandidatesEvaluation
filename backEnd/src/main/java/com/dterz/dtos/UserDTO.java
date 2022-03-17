@@ -12,8 +12,7 @@ public class UserDTO {
 
     @Getter
     @Setter
-    @JsonProperty("uName")
-    private String uName;
+    private String userName;
 
     @Getter
     @Setter
@@ -25,13 +24,11 @@ public class UserDTO {
 
     @Getter
     @Setter
-    @JsonProperty("fName")
-    private String fName;
+    private String fistName;
 
     @Getter
     @Setter
-    @JsonProperty("sName")
-    private String sName;
+    private String surName;
 
     @Getter
     @Setter

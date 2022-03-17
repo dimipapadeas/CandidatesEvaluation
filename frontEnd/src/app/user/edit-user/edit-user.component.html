@@ -19,11 +19,11 @@
         <label for="titleInput">Username</label>
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
-        <input type="text" class="form-control" id="titleInput" placeholder="Username" formControlName="uName">
-        <div *ngIf="form.get('uName').errors?.required && form.get('uName').dirty" class="text-danger">
+        <input type="text" class="form-control" id="titleInput" placeholder="Username" formControlName="userName">
+        <div *ngIf="form.get('userName').errors?.required && form.get('userName').dirty" class="text-danger">
           Field is required
         </div>
-        <div *ngIf="form.get('uName').errors?.minlength && form.get('uName').dirty" class="text-danger">
+        <div *ngIf="form.get('userName').errors?.minlength && form.get('userName').dirty" class="text-danger">
           The minimum length of field is 3 characters
         </div>
       </div>
@@ -31,11 +31,11 @@
         <label for="fName">Firstname</label>
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
-        <input type="text" class="form-control" id="fName" placeholder="Enter Firstname" formControlName="fName">
-        <div *ngIf="form.get('fName').errors?.required && form.get('fName').dirty" class="text-danger">
+        <input type="text" class="form-control" id="fName" placeholder="Enter Firstname" formControlName="fistName">
+        <div *ngIf="form.get('fistName').errors?.required && form.get('fistName').dirty" class="text-danger">
           Field is required
         </div>
-        <div *ngIf="form.get('fName').errors?.minlength && form.get('fName').dirty" class="text-danger">
+        <div *ngIf="form.get('fistName').errors?.minlength && form.get('fistName').dirty" class="text-danger">
           The minimum length of field is 3 characters
         </div>
       </div>
@@ -47,8 +47,8 @@
         <label for="sName">Lastname</label>
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
-        <input type="text" class="form-control" id="sName" placeholder="Enter Lastname" formControlName="sName">
-        <div *ngIf="form.get('sName').invalid && form.get('sName').dirty" class="text-danger">
+        <input type="text" class="form-control" id="sName" placeholder="Enter Lastname" formControlName="surName">
+        <div *ngIf="form.get('surName').invalid && form.get('surName').dirty" class="text-danger">
           Field is required
         </div>
       </div>

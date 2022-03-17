@@ -21,7 +21,7 @@ public class User {
     private long id;
 
     @Column(name = "u_Name")
-    private String uName;
+    private String userName;
 
     @Column(name = "salt")
     private String salt;
@@ -30,10 +30,10 @@ public class User {
     private String pass;
 
     @Column(name = "f_Name")
-    private String fName;
+    private String fistName;
 
     @Column(name = "s_Name")
-    private String sName;
+    private String surName;
 
     @Column(name = "comments")
     private String comments;

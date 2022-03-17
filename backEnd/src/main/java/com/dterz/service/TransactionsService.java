@@ -9,13 +9,13 @@ import com.dterz.model.User;
 import com.dterz.repositories.AccountRepository;
 import com.dterz.repositories.TransactionsRepository;
 import com.dterz.repositories.UserRepository;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,7 +28,7 @@ public class TransactionsService {
     private final TransactionMapper mapper;
 
     public List<TransactionDTO> getAllFiltered(String sort, String page, String size, String description, String type, String username) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUserName(username);
         List<Transaction> allByUserId = transactionsRepository.findByUserId(user.getId());
         return mapper.entityListToDTOList(allByUserId);
     }
@@ -55,7 +55,7 @@ public class TransactionsService {
         Optional<Transaction> transactionOpt = transactionsRepository.findById(dto.getId());
         Transaction transaction;
 
-        User user = userRepository.findByUsername(dto.getUserName());
+        User user = userRepository.findByUserName(dto.getUserName());
         Account account = accountRepository.findByDescription(dto.getAccountName());
         if (transactionOpt.isPresent()) {
             transaction = transactionOpt.get();
