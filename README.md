@@ -83,7 +83,7 @@ Navigate to http://localhost:8080 in your browser to open the application. There
 login to the application. Username and password are:
 
 ```
-"admin", "user1" and "user2".
+"admin", "JDoe" and "ScottS".
 ```
 
 To stop the application, just terminate the execution of the previous command. After making changes to the code stop the
