@@ -117,16 +117,16 @@
             VALUES (1, '', 'admin', 'def1de41e3e48eff838277272a8f0e5bf9ad6d5807a0905afb76e40490d9da2c', 'admin',
                     'QB5Y2AU', true, 'admin');
             INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
-            VALUES (2, '', 'user_1', 'fb0350ddffca2e6fb1dce0ad47fb99bf42305b549d3389948ed360e5ae607365', 'user_1',
-                    'IYXN2LC', false, 'user1');
+            VALUES (2, '', 'Jhon', '554ca4fe55ee5d5361bdc5c41feb3c5b9f93afcb6a60098ba3e2c6e365dde249', 'Doe',
+                    'IYXN2LC', false, 'JDoe');
             INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
-            VALUES (3, '', 'user_2', 'b26a106c549574886938f62b4ca22beb8a76f0fe6d36a65703fd7981e8071d2b', 'user_2',
-                    'PGR4AJD', false, 'user2');
+            VALUES (3, '', 'Sheena', '4510cf992d3152caa17a14213d593dd68b2f69b158bac8edd15fe30ddccabe6d', 'Scott',
+                    'PGR4AJD', false, 'ScottS');
 
             INSERT INTO ACCOUNT (ID, DESCRIPTION, CALCULATED_BALANCE, LAST_TRANSACTION)
-            VALUES (1, 'Account 1 Savings', null, null);
+            VALUES (1, 'Savings Account', null, null);
             INSERT INTO ACCOUNT (ID, DESCRIPTION, CALCULATED_BALANCE, LAST_TRANSACTION)
-            VALUES (2, 'Account 2 Payroll', null, null);
+            VALUES (2, 'Payroll Account', null, null);
 
             INSERT INTO ACCOUNT_USER (USER_ID, ACCOUNT_ID)
             VALUES (2, 1);
@@ -136,11 +136,11 @@
             VALUES (2, 2);
 
             INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
-            VALUES (1, 50, '2022-02-19 14:21:44.634000', 'first saving user1', 1, 2, 1);
+            VALUES (1, 70, '2022-02-19 14:21:44.634000', 'monthly savings Feb. 70€', 1, 2, 1);
             INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
-            VALUES (2, 50, '2022-02-19 14:22:44.634000', 'first saving user2', 1, 3, 1);
+            VALUES (2, 50, '2022-02-19 14:22:44.634000', 'monthly savings Feb. 50€', 1, 3, 1);
             INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
-            VALUES (3, 50, '2022-02-18 14:22:44.634000', 'payroll user1', 1, 2, 2);
+            VALUES (3, 1100, '2022-02-18 14:22:44.634000', 'payroll Jhon Doe', 1, 2, 2);
         </sql>
     </changeSet>
 
