@@ -10,12 +10,15 @@ import com.dterz.repositories.AccountRepository;
 import com.dterz.repositories.TransactionsRepository;
 import com.dterz.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -27,15 +30,32 @@ public class TransactionsService {
     private final UserRepository userRepository;
     private final TransactionMapper mapper;
 
-    public List<TransactionDTO> getAllFiltered(String sort, String page, String size, String description, String type, String username) {
+    public ResponseEntity<Map<String, Object>> getAllForUser(PageRequest pageRequest, String username, String description) {
         User user = userRepository.findByUserName(username);
-        List<Transaction> allByUserId = transactionsRepository.findByUserId(user.getId());
-        return mapper.entityListToDTOList(allByUserId);
+        Page<Transaction> page;
+        if (StringUtils.isNotEmpty(description)) {
+            page = transactionsRepository.findByUserIdAndDescriptionContaining(user.getId(), description, pageRequest);
+        } else {
+            page = transactionsRepository.findByUserId(user.getId(), pageRequest);
+        }
+        List<Transaction> transactions = page.getContent();
+        Map<String, Object> response = new HashMap<>();
+        response.put("transactions", mapper.entityListToDTOList(transactions));
+        response.put("currentPage", page.getNumber());
+        response.put("totalItems", page.getTotalElements());
+        response.put("totalPages", page.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public List<TransactionDTO> getAllForAccount(String sort, String page, String size, String accountId) {
-        List<Transaction> allByAccountId = transactionsRepository.findByAccountId(Long.parseLong(accountId));
-        return mapper.entityListToDTOList(allByAccountId);
+    public ResponseEntity<Map<String, Object>> getAllForAccount(PageRequest pageRequest, String accountId) {
+        Page<Transaction> page = transactionsRepository.findByAccountId(Long.parseLong(accountId), pageRequest);
+        List<Transaction> allByAccount = page.getContent();
+        Map<String, Object> response = new HashMap<>();
+        response.put("transactions", mapper.entityListToDTOList(allByAccount));
+        response.put("currentPage", page.getNumber());
+        response.put("totalItems", page.getTotalElements());
+        response.put("totalPages", page.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     public void deleteTransaction(long transactionId) {

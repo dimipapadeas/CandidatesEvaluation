@@ -21,12 +21,13 @@ export class TransactionService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAllFiltered(sort: string, page: string, size: string, description: string, type: string, userID: string) {
+  getAllForUser(sort: string, direction: string, page: string, size: string, description: string, type: string, userID: string) {
     return this.httpClient.get(
-      environment.apiUrl + '/transactions/getAllFiltered', {
+      environment.apiUrl + '/transactions/getAllForUser', {
         observe: 'response',
         params: new HttpParams()
           .set('sort', sort)
+          .set('direction', direction)
           .set('page', page)
           .set('size', size)
           .set('description', description)
@@ -35,12 +36,13 @@ export class TransactionService {
       })
   }
 
-  getAllForAccount(sort: string, page: string, size: string, accountId: string) {
+  getAllForAccount(sort: string, direction: string, page: string, size: string, accountId: string) {
     return this.httpClient.get(
       environment.apiUrl + '/transactions/getAllForAccount', {
         observe: 'response',
         params: new HttpParams()
           .set('sort', sort)
+          .set('direction', direction)
           .set('page', page)
           .set('size', size)
           .set('accountId', accountId)

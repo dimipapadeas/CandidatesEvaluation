@@ -3,7 +3,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {Transaction, TransactionService} from "../services/transaction.service";
 import {Account, AccountService} from "../services/account.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, Sort} from "@angular/material/sort";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {tap} from "rxjs/operators";
@@ -20,7 +20,7 @@ export class AccountComponent implements OnInit {
   displayedColumnsUser: string[] = ['fName', 'sName'];
 
   @Input() dataLength: number;
-  @Input() dataPageIndex: number; // Which index is the current for the data paginator
+  @Input() dataPageIndex: number = 0; // Which index is the current for the data paginator
   @Input() dataPageSize: number = 5; // Size of paginator page data
   @Input() pageSizeOptions: number[] = [5, 10, 25, 100]; // Size of paginator page data
 
@@ -37,9 +37,8 @@ export class AccountComponent implements OnInit {
   accountList: MatTableDataSource<Account>;
   userList: MatTableDataSource<User>;
   headers: string[];
-  pageIndex: string;
-  pageSize: string;
-  tableSort: string;
+  tableSort: string = '';
+  tableSortDir: string = 'asc';
   filterValues: {
     description: string;
     type: string;
@@ -60,9 +59,8 @@ export class AccountComponent implements OnInit {
         this.form.patchValue({...response});
         this.userList = new MatTableDataSource(response.users);
       });
-      this.tableSort = '';
       this.filterValues = this.form.value;
-      this.getTransactionsForAccount(this.tableSort, '', this.dataPageSize.toString()).subscribe();
+      this.getTransactionsForAccount(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString()).subscribe();
     } else {
       this.accountService.createDraftAccount().subscribe(response => {
         this.form.patchValue({...response});
@@ -70,15 +68,28 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  private getTransactionsForAccount(sort: string, page: string, size: string) {
-    return this.transactionService.getAllForAccount(sort, page, size, this.paramId).pipe(
+  getServerData(event: PageEvent) {
+    return this.getTransactionsForAccount(this.tableSort, this.tableSortDir, event.pageIndex.toString(), event.pageSize.toString()).subscribe();
+  }
+
+  sortData(event: Sort) {
+    if (event.direction == "") {
+      this.tableSort = '';
+      this.tableSortDir = 'asc';
+    } else {
+      this.tableSort = event.active
+      this.tableSortDir = event.direction;
+    }
+    return this.getTransactionsForAccount(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString()).subscribe();
+  }
+
+  private getTransactionsForAccount(sort: string, direction: string, page: string, size: string) {
+    return this.transactionService.getAllForAccount(sort, direction, page, size, this.paramId).pipe(
       tap((response: any) => {
-        const transactions: any = response.body;
+        const transactions: any = response.body.transactions;
         this.transactionList = new MatTableDataSource(transactions);
-        const keys = response.headers.keys();
-        this.headers = keys.map(key =>
-          response.headers.get(key));
-        this.dataLength = +this.headers[6];
+        this.dataLength = +response.body.totalItems;
+        this.dataPageIndex = +response.body.currentPage;
       })
     );
   }
@@ -95,7 +106,7 @@ export class AccountComponent implements OnInit {
   deleteTransaction(id, $event: MouseEvent) {
     $event.stopPropagation();
     this.transactionService.deleteTransaction(id).subscribe((data: any[]) => {
-      this.getTransactionsForAccount(this.tableSort, '', this.dataPageSize.toString()).subscribe();
+      this.getTransactionsForAccount(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString()).subscribe();
     });
   }
 

@@ -13,7 +13,7 @@
 
       <div class="row">
         <div class="col-sm-2 col-md-2 col-lg-2">
-          <label>Advanced Search</label>
+          <label>Search by Description</label>
         </div>
         <form [formGroup]="form" class="form-inline md-form mr-auto mb-4">
           <input type="text" class="form-control" id="descriptionSearchInput" placeholder="Description"
@@ -25,7 +25,7 @@
 
       <div class="row col-sm-12 col-md-12 col-lg-12">
         <table mat-table class="mat-elevation-z8" [dataSource]="transactionList" matSort
-               (matSortChange)="sortData($event)">
+               (matSortChange)="sortData($event)" matSortActive="date" matSortDirection="asc">
 
           <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef mat-sort-header=""> Description</th>

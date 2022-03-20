@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   displayedColumnsAccount: string[] = ['description', 'calculatedBalance', 'actions'];
 
   @Input() dataLength: number;
-  @Input() dataPageIndex: number; // Which index is the current for the data paginator
+  @Input() dataPageIndex: number = 0; // Which index is the current for the data paginator
   @Input() dataPageSize: number = 5; // Size of paginator page data
   @Input() pageSizeOptions: number[] = [5, 10, 25, 100]; // Size of paginator page data
 
@@ -35,9 +35,8 @@ export class HomeComponent implements OnInit {
   accountList: MatTableDataSource<Account>;
   headers: string[];
   headersAccount: string[];
-  pageIndex: string;
-  pageSize: string;
-  tableSort: string;
+  tableSort: string = '';
+  tableSortDir: string = 'asc';
   filterValues: {
     description: string;
     type: string;
@@ -47,21 +46,20 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.userID = sessionStorage.getItem("username");
     this.createFilterForm();
-    this.tableSort = '';
     this.filterValues = this.form.value;
-    this.getTransactionsForUser(this.tableSort, '', this.dataPageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
+    this.getTransactionsForUser(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
     this.getAccountsForUser().subscribe();
   }
 
   applyFilter(form: FormGroup) {
     this.filterValues = form.value;
-    return this.getTransactionsForUser(this.tableSort, '', '5', this.filterValues.description, this.filterValues.type).subscribe();
+    return this.getTransactionsForUser(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
   }
 
   clearFilter() {
     this.createFilterForm();
     this.filterValues = this.form.value;
-    this.getTransactionsForUser(this.tableSort, '', this.dataPageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
+    this.getTransactionsForUser(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
   }
 
   private createFilterForm() {
@@ -80,27 +78,25 @@ export class HomeComponent implements OnInit {
   sortData(event: Sort) {
     if (event.direction == "") {
       this.tableSort = '';
+      this.tableSortDir = 'asc';
     } else {
-      this.tableSort = event.active + ',' + event.direction;
+      this.tableSort = event.active
+      this.tableSortDir = event.direction;
     }
-    return this.getTransactionsForUser(this.tableSort, this.pageIndex, this.pageSize, this.filterValues.description, this.filterValues.type).subscribe();
+    return this.getTransactionsForUser(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
   }
 
   getServerData(event: PageEvent) {
-    this.pageIndex = event.pageIndex.toString();
-    this.pageSize = event.pageSize.toString();
-    return this.getTransactionsForUser(this.tableSort, this.pageIndex, this.pageSize, this.filterValues.description, this.filterValues.type).subscribe();
+    return this.getTransactionsForUser(this.tableSort, this.tableSortDir, event.pageIndex.toString(), event.pageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
   }
 
-  private getTransactionsForUser(sort: string, page: string, size: string, description: string, type: string) {
-    return this.transactionService.getAllFiltered(sort, page, size, description, type, this.userID).pipe(
+  private getTransactionsForUser(sort: string, direction: string, page: string, size: string, description: string, type: string) {
+    return this.transactionService.getAllForUser(sort, direction, page, size, description, type, this.userID).pipe(
       tap((response: any) => {
-        const transactions: any = response.body;
+        const transactions: any = response.body.transactions;
         this.transactionList = new MatTableDataSource(transactions);
-        const keys = response.headers.keys();
-        this.headers = keys.map(key =>
-          response.headers.get(key));
-        this.dataLength = +this.headers[5];
+        this.dataLength = +response.body.totalItems;
+        this.dataPageIndex = +response.body.currentPage;
       })
     );
   }
@@ -119,10 +115,6 @@ export class HomeComponent implements OnInit {
       tap((response: any) => {
         const accounts: any = response.body;
         this.accountList = new MatTableDataSource(accounts);
-        const keys = response.headers.keys();
-        this.headersAccount = keys.map(key =>
-          response.headers.get(key));
-        this.dataLength = +this.headersAccount[3];
       })
     );
   }
@@ -132,10 +124,6 @@ export class HomeComponent implements OnInit {
       tap((response: any) => {
         const accounts: any = response.body;
         this.accountList = new MatTableDataSource(accounts);
-        const keys = response.headers.keys();
-        this.headersAccount = keys.map(key =>
-          response.headers.get(key));
-        this.dataLength = +this.headersAccount[3];
       })
     );
   }

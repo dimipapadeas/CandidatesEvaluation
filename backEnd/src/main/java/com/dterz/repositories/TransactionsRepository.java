@@ -1,14 +1,16 @@
 package com.dterz.repositories;
 
 import com.dterz.model.Transaction;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface TransactionsRepository extends GenericRepository<Transaction> {
 
-    List<Transaction> findByUserId(long userId);
+    Page<Transaction> findByUserId(long userId, Pageable pageRequest);
 
-    List<Transaction> findByAccountId(long accountId);
+    Page<Transaction> findByAccountId(long accountId, Pageable pageRequest);
+
+    Page<Transaction> findByUserIdAndDescriptionContaining(Long userId, String description, Pageable pageRequest);
 }
