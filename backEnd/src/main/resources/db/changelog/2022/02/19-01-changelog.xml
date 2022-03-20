@@ -11,7 +11,6 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ACCOUNT"/>
             </column>
             <column name="description" type="VARCHAR(255)"/>
-            <column name="calculated_balance" type="DECIMAL"/>
             <column name="last_transaction" type="DATETIME"/>
         </createTable>
     </changeSet>
@@ -120,27 +119,83 @@
             VALUES (2, '', 'Jhon', '554ca4fe55ee5d5361bdc5c41feb3c5b9f93afcb6a60098ba3e2c6e365dde249', 'Doe',
                     'IYXN2LC', false, 'JDoe');
             INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
-            VALUES (3, '', 'Sheena', '4510cf992d3152caa17a14213d593dd68b2f69b158bac8edd15fe30ddccabe6d', 'Scott',
-                    'PGR4AJD', false, 'ScottS');
+            VALUES (3, '', 'Sheena', 'a45986f9eb8a65445c62beff2c89abade49787ba1493e8861bb89238a8565071', 'Scott',
+                    'PGR4AJD', false, 'SScotts');
+            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
+            VALUES (4, '', 'Lisa', 'b53b8b6c3faad288063df214b7fb8cefa7b63aa3ee8ff75a2f06f5f9728930d8', 'Doe',
+                    '1G64AJG', false, 'LDoe');
 
-            INSERT INTO ACCOUNT (ID, DESCRIPTION, CALCULATED_BALANCE, LAST_TRANSACTION)
-            VALUES (1, 'Savings Account', null, null);
-            INSERT INTO ACCOUNT (ID, DESCRIPTION, CALCULATED_BALANCE, LAST_TRANSACTION)
-            VALUES (2, 'Payroll Account', null, null);
+            INSERT INTO ACCOUNT (ID, DESCRIPTION, LAST_TRANSACTION)
+            VALUES (1, 'Does Savings Account', null);
+            INSERT INTO ACCOUNT (ID, DESCRIPTION, LAST_TRANSACTION)
+            VALUES (2, 'Jhon Does Payroll Account', null);
+            INSERT INTO ACCOUNT (ID, DESCRIPTION, LAST_TRANSACTION)
+            VALUES (3, 'Unkown Account', null);
+            INSERT INTO ACCOUNT (ID, DESCRIPTION, LAST_TRANSACTION)
+            VALUES (4, 'Empty Account', null);
 
             INSERT INTO ACCOUNT_USER (USER_ID, ACCOUNT_ID)
             VALUES (2, 1);
             INSERT INTO ACCOUNT_USER (USER_ID, ACCOUNT_ID)
-            VALUES (3, 1);
+            VALUES (4, 1);
             INSERT INTO ACCOUNT_USER (USER_ID, ACCOUNT_ID)
             VALUES (2, 2);
+            INSERT INTO ACCOUNT_USER (USER_ID, ACCOUNT_ID)
+            VALUES (3, 3);
 
             INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
-            VALUES (1, 70, '2022-02-19 14:21:44.634000', 'monthly savings Feb. 70€', 1, 2, 1);
+            VALUES (1, 1100, '2021-09-05 09:22:44.634000', 'payroll Aug. Jhon Doe', 1, 2, 2);
             INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
-            VALUES (2, 50, '2022-02-19 14:22:44.634000', 'monthly savings Feb. 50€', 1, 3, 1);
+            VALUES (2, 1100, '2021-10-05 09:22:44.634000', 'payroll Sep. Jhon Doe', 1, 2, 2);
             INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
-            VALUES (3, 1100, '2022-02-18 14:22:44.634000', 'payroll Jhon Doe', 1, 2, 2);
+            VALUES (3, 1100, '2021-11-05 09:22:44.634000', 'payroll Okt. Jhon Doe', 1, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (4, 1100, '2021-12-05 09:22:44.634000', 'payroll Nov. Jhon Doe', 1, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (5, 1100, '2022-01-05 09:22:44.634000', 'payroll Dec. Jhon Doe', 1, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (6, 1100, '2022-02-05 09:22:44.634000', 'payroll Jan. Jhon Doe', 1, 2, 2);
+
+
+
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (7, 70, '2022-09-06 14:21:44.634000', 'monthly savings Sep. 70€', 1, 2, 1);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (8, 80, '2022-10-06 14:21:44.634000', 'monthly savings Okt. 80€', 1, 2, 1);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (9, 80, '2022-11-06 14:21:44.634000', 'monthly savings Nov. 80€', 1, 2, 1);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (10, 60, '2022-12-06 14:21:44.634000', 'monthly savings Dec. 60€', 1, 2, 1);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (11, 70, '2022-01-06 14:21:44.634000', 'monthly savings Jan. 70€', 1, 2, 1);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (12, 90, '2022-02-06 14:21:44.634000', 'monthly savings Feb. 90€', 1, 2, 1);
+
+
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (13, 70, '2022-09-06 14:21:44.634000', 'monthly savings Sep. 70€', 0, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (14, 80, '2022-10-06 14:21:44.634000', 'monthly savings Okt. 80€', 0, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (15, 80, '2022-11-06 14:21:44.634000', 'monthly savings Nov. 80€', 0, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (16, 60, '2022-12-06 14:21:44.634000', 'monthly savings Dec. 60€', 0, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (17, 70, '2022-01-06 14:21:44.634000', 'monthly savings Jan. 70€', 0, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (18, 90, '2022-02-06 14:21:44.634000', 'monthly savings Feb. 90€', 0, 2, 2);
+
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (19, 300, '2022-01-15 10:15:21.000000', 'rent Jan. 300€', 0, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (20, 300, '2022-02-15 10:48:44.000000', 'rent Feb. 300€', 0, 2, 2);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (21, 420, '2022-03-01 09:00:00.000000', 'insurance payments. 420€', 0, 2, 2);
+
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (22, 50, '2022-01-19 19:00:44.634000', 'monthly savings Jan. 50€', 1, 4, 1);
+            INSERT INTO TRANSACTION (ID, AMOUNT, DATE, DESCRIPTION, TYPE, USER_ID, ACCOUNT_ID)
+            VALUES (23, 50, '2022-02-19 18:12:20.634000', 'monthly savings Feb. 50€', 1, 4, 1);
         </sql>
     </changeSet>
 

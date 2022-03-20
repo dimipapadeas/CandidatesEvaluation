@@ -71,27 +71,17 @@ either from source or as a pre-packaged bundle.
 
 ### 6: Compile and start App
 
-Navigate to the project folder and execute the command
+Navigate to the project folder and execute the command `mvn clean install`
 
-```
-mvn spring-boot:run
-```
-
-This should start the application.
+This should compile your application. When this process finishes navigate to `/backEnd` and run `mvn spring-boot:run`
 
 Navigate to http://localhost:8080 in your browser to open the application. There are 3 available Users you can use to
 login to the application. Username and password are:
 
-```
-"admin", "JDoe" and "ScottS".
-```
+`JDoe`, `LDoe`, `SScotts` and `admin`.
 
 To stop the application, just terminate the execution of the previous command. After making changes to the code stop the
-application and run again
-
-```
-mvn spring-boot:run
-```
+application repeat step `6`
 
 More information regarding the components of the Application can be found in further README files.
 
