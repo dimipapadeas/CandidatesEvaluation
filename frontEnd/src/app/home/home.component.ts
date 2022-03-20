@@ -42,9 +42,11 @@ export class HomeComponent implements OnInit {
     type: string;
   };
   private userID: string;
+  isAdmin: boolean = false;
 
   ngOnInit() {
     this.userID = sessionStorage.getItem("username");
+    this.isAdmin = (/true/i).test(sessionStorage.getItem("userAdmin"));
     this.createFilterForm();
     this.filterValues = this.form.value;
     this.getTransactionsForUser(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
@@ -113,7 +115,7 @@ export class HomeComponent implements OnInit {
   private getallAccounts() {
     return this.accountService.getAll(null).pipe(
       tap((response: any) => {
-        const accounts: any = response.body;
+        const accounts: any = response.body.accounts;
         this.accountList = new MatTableDataSource(accounts);
       })
     );

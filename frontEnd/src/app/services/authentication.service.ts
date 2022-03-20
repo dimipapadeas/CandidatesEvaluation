@@ -19,10 +19,9 @@ export class AuthenticationService {
       .pipe(
         map(userData => {
           sessionStorage.setItem("username", username);
-          let tokenStr = userData.jwttoken;
-          let userId = userData.userId;
-          sessionStorage.setItem("token", tokenStr);
-          sessionStorage.setItem("userId", userId);
+          sessionStorage.setItem("token", userData.jwttoken);
+          sessionStorage.setItem("userId", userData.userId);
+          sessionStorage.setItem("userAdmin", userData.admin);
           return userData;
         })
       );
@@ -36,5 +35,7 @@ export class AuthenticationService {
   logOut() {
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("userAdmin");
   }
 }

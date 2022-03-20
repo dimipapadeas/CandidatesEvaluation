@@ -30,7 +30,7 @@ public class AuthenticationService {
             String saltedAndHashed = DigestUtils.sha256Hex(user.getSalt() + password);
             if (saltedAndHashed.equals(user.getPass())) {
                 final String token = jwtTokenUtil.generateToken(user);
-                return new JwtResponse(token, user.getId());
+                return new JwtResponse(token, user.getId(), user.isSuperAdmin());
             } else {
                 throw new Exception("not Autherised");
             }
