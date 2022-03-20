@@ -72,7 +72,9 @@ export class AccountComponent implements OnInit {
   }
 
   getServerData(event: PageEvent) {
-    return this.getTransactionsForAccount(this.tableSort, this.tableSortDir, event.pageIndex.toString(), event.pageSize.toString()).subscribe();
+    this.dataPageIndex = event.pageIndex;
+    this.dataPageSize = event.pageSize;
+    return this.getTransactionsForAccount(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString()).subscribe();
   }
 
   sortData(event: Sort) {

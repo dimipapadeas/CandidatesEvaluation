@@ -89,7 +89,9 @@ export class HomeComponent implements OnInit {
   }
 
   getServerData(event: PageEvent) {
-    return this.getTransactionsForUser(this.tableSort, this.tableSortDir, event.pageIndex.toString(), event.pageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
+    this.dataPageIndex = event.pageIndex;
+    this.dataPageSize = event.pageSize;
+    return this.getTransactionsForUser(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
   }
 
   private getTransactionsForUser(sort: string, direction: string, page: string, size: string, description: string, type: string) {
