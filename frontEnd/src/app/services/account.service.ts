@@ -21,9 +21,9 @@ export class AccountService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getByUsername(userID: string) {
+  getAll(userID: string) {
     return this.httpClient.get(
-      environment.apiUrl + '/account/getByUsername', {
+      environment.apiUrl + '/account/getAll', {
         observe: 'response',
         params: new HttpParams()
           .set('userID', userID)

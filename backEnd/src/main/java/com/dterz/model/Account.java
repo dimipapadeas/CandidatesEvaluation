@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -23,9 +22,6 @@ public class Account {
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "calculated_balance")
-    private BigDecimal calculatedBalance;
 
     @Column(name = "last_transaction")
     private Date lastTransaction;

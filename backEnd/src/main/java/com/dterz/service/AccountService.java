@@ -7,14 +7,21 @@ import com.dterz.model.Transaction;
 import com.dterz.model.TransanctionType;
 import com.dterz.model.User;
 import com.dterz.repositories.AccountRepository;
+import com.dterz.repositories.TransactionsRepository;
 import com.dterz.repositories.UserRepository;
 import liquibase.repackaged.org.apache.commons.collections4.CollectionUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -25,37 +32,46 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper mapper;
     private final UserRepository userRepository;
+    private final TransactionsRepository transactionsRepository;
 
-    public List<AccountDTO> getByUsername(String username) {
+    public ResponseEntity<Map<String, Object>> getAll(PageRequest pageRequest, String username) {
         User user = userRepository.findByUserName(username);
-        List<Account> acountList;
+        Page<Account> page;
         if (user != null) {
-            acountList = accountRepository.findByUsers_Id(user.getId());
+            page = accountRepository.findByUserId(user.getId(), pageRequest);
         } else {
-            acountList = accountRepository.findAll();
+            page = accountRepository.findAll(pageRequest);
         }
-        acountList.forEach(this::calcBalance);
-        return mapper.entityListToDTOList(acountList);
+        List<Account> acountList = page.getContent();
+        Map<String, Object> response = new HashMap<>();
+        List<AccountDTO> accountDTOS = mapper.entityListToDTOList(acountList);
+        accountDTOS.forEach(this::calcBalance);
+        response.put("accounts", accountDTOS);
+        response.put("currentPage", page.getNumber());
+        response.put("totalItems", page.getTotalElements());
+        response.put("totalPages", page.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    private void calcBalance(Account account) {
+    private void calcBalance(AccountDTO account) {
         BigDecimal balance = BigDecimal.ZERO;
-        if (CollectionUtils.isNotEmpty(account.getTransactions())) {
-            for (Transaction transaction : account.getTransactions()) {
-                if (transaction.getType().equals(TransanctionType.INCOME)) {
-                    balance = balance.add(transaction.getAmount());
-                } else {
-                    balance = balance.subtract(transaction.getAmount());
-                }
-            }
+        List<Transaction> income = transactionsRepository.findByTypeAndAccount_Id(TransanctionType.INCOME, account.getId());
+        List<Transaction> expences = transactionsRepository.findByTypeAndAccount_Id(TransanctionType.EXPENCE, account.getId());
+        if (CollectionUtils.isNotEmpty(income)) {
+            balance = income.stream().map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
+        if (CollectionUtils.isNotEmpty(expences)) {
+            BigDecimal expen = expences.stream().map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+            balance = balance.subtract(expen);
         }
         account.setCalculatedBalance(balance);
     }
 
     public AccountDTO getAccountById(long accountId) {
         Account account = accountRepository.findById(accountId).get();
-        calcBalance(account);
-        return mapper.entityToDto(account);
+        AccountDTO accountDTO = mapper.entityToDto(account);
+        calcBalance(accountDTO);
+        return accountDTO;
     }
 
     public AccountDTO draftAccount() {

@@ -2,16 +2,16 @@ package com.dterz.repositories;
 
 import com.dterz.model.Account;
 import com.dterz.model.QAccount;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface AccountRepository extends GenericRepository<Account> {
 
-    default List<Account> findByUsers_Id(long userId) {
+    default Page<Account> findByUserId(long userId, Pageable pageRequest) {
         QAccount account = QAccount.account;
-        return iterableToList(findAll(account.users.any().id.eq(userId)));
+        return findAll(account.users.any().id.eq(userId), pageRequest);
     }
 
     Account findByDescription(String description);

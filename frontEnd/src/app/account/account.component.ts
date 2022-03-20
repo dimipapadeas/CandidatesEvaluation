@@ -53,19 +53,22 @@ export class AccountComponent implements OnInit {
       description: new FormControl({value: '', disabled: this.paramId}, [Validators.required, Validators.minLength(3)]),
     });
 
-
     if (this.paramId) {
-      this.accountService.getAccountById(this.paramId).subscribe(response => {
-        this.form.patchValue({...response});
-        this.userList = new MatTableDataSource(response.users);
-      });
-      this.filterValues = this.form.value;
-      this.getTransactionsForAccount(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString()).subscribe();
+      this.populateMask();
     } else {
       this.accountService.createDraftAccount().subscribe(response => {
         this.form.patchValue({...response});
       });
     }
+  }
+
+  private populateMask() {
+    this.accountService.getAccountById(this.paramId).subscribe(response => {
+      this.form.patchValue({...response});
+      this.userList = new MatTableDataSource(response.users);
+    });
+    this.filterValues = this.form.value;
+    this.getTransactionsForAccount(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString()).subscribe();
   }
 
   getServerData(event: PageEvent) {
@@ -106,7 +109,7 @@ export class AccountComponent implements OnInit {
   deleteTransaction(id, $event: MouseEvent) {
     $event.stopPropagation();
     this.transactionService.deleteTransaction(id).subscribe((data: any[]) => {
-      this.getTransactionsForAccount(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString()).subscribe();
+      this.populateMask();
     });
   }
 

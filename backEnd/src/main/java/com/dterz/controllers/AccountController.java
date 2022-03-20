@@ -3,9 +3,11 @@ package com.dterz.controllers;
 import com.dterz.dtos.AccountDTO;
 import com.dterz.service.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/account/")
@@ -25,9 +27,10 @@ public class AccountController {
         return accountService.draftAccount();
     }
 
-    @GetMapping("getByUsername")
-    public List<AccountDTO> getByUsername(@RequestParam(name = "userID", defaultValue = "") String userID) {
-        return accountService.getByUsername(userID);
+    @GetMapping("getAll")
+    public ResponseEntity<Map<String, Object>> getByUsername(@RequestParam(name = "userID", defaultValue = "") String userID) {
+        PageRequest pageRequest = PageRequest.of(0, 100);
+        return accountService.getAll(pageRequest, userID);
     }
 
     @PutMapping("update")
