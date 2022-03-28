@@ -93,13 +93,25 @@ The following tasks award points up to a maximum of 100.
 
 ### Exercise 1 (xx points)
 
+At the moment the Application can not be compiled. The code has some deliberate placed errors. For this exercise and the
+Test to begin identify and fix the compilation errors in the code.
+
 ### Exercise 2 (xx points)
+
+At the moment The code runs into an exception when The User tries to [...]. Find the exception and elimante the broken
+behaviour.
 
 ### Exercise 3 (xx points)
 
+To display the current Balance of an account the Function `Calcbalance2` is used. To complete this excercise identify
+and fix issues with this function regarding code style, functionality, performance, etc. For each succesfull improvement
+you get awarded points up to the maximum for this Exercise.
+
 ### Exercise 4 (xx points)
 
-### Exercise 5 (xx points)
+At the moment the Users are unable to register their Age. For this exercise add an age Attribute to the users. To
+Complete this task the candidate should implement all the necessary changes in the frontend, the backend and the
+database.
 
 ### Extra Credit Exercise
 
