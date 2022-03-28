@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AboutService} from "../services/about.service";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-about',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  backVersion: string;
+  frontVersion: string;
+
+  constructor(private aboutService: AboutService) {
+  }
 
   ngOnInit(): void {
+    this.aboutService.getVersion().pipe(
+      tap((response: any) => {
+        this.backVersion = response.body.backVersion;
+        this.frontVersion = response.body.frontVersion;
+      })
+    ).subscribe();
   }
 
 }
