@@ -14,6 +14,13 @@ public class JwtAuthenticationController {
 
     private final AuthenticationService authenticationService;
 
+    /**
+     * Authenticates the User from the credentials provided during log in
+     *
+     * @param authenticationRequest provided credentials
+     * @return ResponseEntity<?>
+     * @throws Exception throws an Exception
+     */
     @RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         JwtResponse authenticate = authenticationService.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());

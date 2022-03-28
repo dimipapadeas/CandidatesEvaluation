@@ -30,6 +30,14 @@ public class TransactionsService {
     private final UserRepository userRepository;
     private final TransactionMapper mapper;
 
+    /**
+     * Gets a List of Transaction for a given User according to some sort and filter criteria
+     *
+     * @param pageRequest sort and filter criteria for the requested transactions
+     * @param username    the name of the User to filter the transactions by
+     * @param description the input for filtering the Transactions by description
+     * @return ResponseEntity<Map < String, Object>>
+     */
     public ResponseEntity<Map<String, Object>> getAllForUser(PageRequest pageRequest, String username, String description) {
         User user = userRepository.findByUserName(username);
         Page<Transaction> page;
@@ -47,6 +55,13 @@ public class TransactionsService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * Gets a List of Transaction for a given Account according to some sort and filter criteria
+     *
+     * @param pageRequest sort and filter criteria for the requested transactions
+     * @param accountId   the id of the User to filter the transactions by
+     * @return ResponseEntity<Map < String, Object>>
+     */
     public ResponseEntity<Map<String, Object>> getAllForAccount(PageRequest pageRequest, String accountId) {
         Page<Transaction> page = transactionsRepository.findByAccountId(Long.parseLong(accountId), pageRequest);
         List<Transaction> allByAccount = page.getContent();
@@ -58,10 +73,21 @@ public class TransactionsService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * Deletes a Transaction from the Database
+     *
+     * @param transactionId the Id of the Transaction to delete
+     */
     public void deleteTransaction(long transactionId) {
         transactionsRepository.delete(transactionId);
     }
 
+    /**
+     * Create and returns a new empty Transaction Object for the Account specified
+     *
+     * @param accountId The account that requested a new Transaction
+     * @return TransactionDTO
+     */
     public TransactionDTO createDraftTransaction(String accountId) {
         Account account = accountRepository.findById(Long.valueOf(accountId)).get();
         Transaction draft = new Transaction();
@@ -71,6 +97,12 @@ public class TransactionsService {
         return mapper.entityToDto(draft);
     }
 
+    /**
+     * Updates the Transaction with the data from the Front end
+     *
+     * @param dto the updated Transaction
+     * @return TransactionDTO
+     */
     public TransactionDTO updateTransaction(TransactionDTO dto) {
         Optional<Transaction> transactionOpt = transactionsRepository.findById(dto.getId());
         Transaction transaction;
@@ -89,6 +121,12 @@ public class TransactionsService {
         return mapper.entityToDto(transaction);
     }
 
+    /**
+     * Gets a Transaction by its id
+     *
+     * @param transactionId the id of the Transaction requested
+     * @return TransactionDTO
+     */
     public TransactionDTO getTransactionIdById(long transactionId) {
         Transaction transaction = transactionsRepository.findById(transactionId).get();
         return mapper.entityToDto(transaction);

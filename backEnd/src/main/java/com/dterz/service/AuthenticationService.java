@@ -19,6 +19,14 @@ public class AuthenticationService {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
 
+    /**
+     * Authenticates the User from the credentials provided during log in
+     *
+     * @param username the username provided
+     * @param password the plain text password provided
+     * @return JwtResponse
+     * @throws Exception throws an Exception
+     */
     public JwtResponse authenticate(String username, String password) throws Exception {
         Objects.requireNonNull(username);
         Objects.requireNonNull(password);

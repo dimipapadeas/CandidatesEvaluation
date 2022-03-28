@@ -18,6 +18,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class InfoController {
 
+    /**
+     * Returns the current Version of the components of this Application
+     *
+     * @return ResponseEntity<Map < String, Object>>
+     */
     @GetMapping("getVersion")
     public ResponseEntity<Map<String, Object>> getVersion() {
         Map<String, Object> response = new HashMap<>();

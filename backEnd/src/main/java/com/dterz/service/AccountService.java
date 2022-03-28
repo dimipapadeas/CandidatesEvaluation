@@ -34,6 +34,14 @@ public class AccountService {
     private final UserRepository userRepository;
     private final TransactionsRepository transactionsRepository;
 
+    /**
+     * Gets all Accounts currently in the System.
+     * The parameter is optional and if provided the accounts get filtered by User
+     *
+     * @param pageRequest number of active page and number of items per page
+     * @param username    the username
+     * @return ResponseEntity<Map < String, Object>>
+     */
     public ResponseEntity<Map<String, Object>> getAll(PageRequest pageRequest, String username) {
         User user = userRepository.findByUserName(username);
         Page<Account> page;
@@ -53,6 +61,11 @@ public class AccountService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * Calculates the current balance of an Account based on it transactions
+     *
+     * @param account the Account we need the Balance for
+     */
     private void calcBalance(AccountDTO account) {
         BigDecimal balance = BigDecimal.ZERO;
         List<Transaction> income = transactionsRepository.findByTypeAndAccount_Id(TransanctionType.INCOME, account.getId());
@@ -67,6 +80,12 @@ public class AccountService {
         account.setCalculatedBalance(balance);
     }
 
+    /**
+     * Gets an Acount by its id
+     *
+     * @param accountId the id of the Account to get
+     * @return AccountDTO
+     */
     public AccountDTO getAccountById(long accountId) {
         Account account = accountRepository.findById(accountId).get();
         AccountDTO accountDTO = mapper.entityToDto(account);
@@ -74,13 +93,23 @@ public class AccountService {
         return accountDTO;
     }
 
+    /**
+     * Creates and returns a new empty Account Object
+     *
+     * @return AccountDTO
+     */
     public AccountDTO draftAccount() {
         Account account = new Account();
         return mapper.entityToDto(account);
     }
 
+    /**
+     * Updates the Account with the data from the Front end
+     *
+     * @param accountDTO the updated Account
+     * @return AccountDTO
+     */
     public AccountDTO updateAccount(AccountDTO accountDTO) {
-
         Optional<Account> accountOpt = accountRepository.findById(accountDTO.getId());
         Account account;
         if (accountOpt.isPresent()) {
