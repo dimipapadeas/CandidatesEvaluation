@@ -16,10 +16,14 @@ export class AboutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.aboutService.getVersion().pipe(
+    this.aboutService.getVersion("backend").pipe(
       tap((response: any) => {
-        this.backVersion = response.body.backVersion;
-        this.frontVersion = response.body.frontVersion;
+        this.backVersion = response.body.backend;
+      })
+    ).subscribe();
+    this.aboutService.getVersion("frontend").pipe(
+      tap((response: any) => {
+        this.frontVersion = response.body.frontend;
       })
     ).subscribe();
   }
