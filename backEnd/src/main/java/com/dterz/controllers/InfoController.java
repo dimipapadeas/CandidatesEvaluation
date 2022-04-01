@@ -1,15 +1,11 @@
 package com.dterz.controllers;
 
-import com.dterz.Constants;
+import com.dterz.service.InfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -18,16 +14,16 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class InfoController {
 
+    private final InfoService infoService;
+
     /**
      * Returns the current Version of the components of this Application
      *
      * @return ResponseEntity<Map < String, Object>>
      */
-    @GetMapping("getVersion")
-    public ResponseEntity<Map<String, Object>> getVersion() {
-        Map<String, Object> response = new HashMap<>();
-        response.put("backVersion", Constants.BACK_VERSION);
-        response.put("frontVersion", Constants.FRONT_VERSION);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    @GetMapping("getVersion/{component}")
+    public ResponseEntity<Map<String, Object>> getVersion(@PathVariable("component") String component) {
+        Map<String, Object> version = infoService.getVersion(component);
+        return new ResponseEntity<>(version, HttpStatus.OK);
     }
 }

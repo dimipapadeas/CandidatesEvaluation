@@ -10,9 +10,9 @@ export class AboutService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getVersion() {
+  getVersion(param: string) {
     return this.httpClient.get(
-      environment.apiUrl + '/info/getVersion', {
+      environment.apiUrl + `/info/getVersion/${param}`, {
         observe: 'response',
       })
   }

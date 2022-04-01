@@ -89,25 +89,23 @@ More information regarding the components of the Application can be found in fur
 
 The following tasks award points up to a maximum of 100.
 
-### Installation (xx points)
-
-### Exercise 1 (xx points)
+### Installation and Exercise 1 (20 points)
 
 At the moment the Application can not be compiled. The code has some deliberate placed errors. For this exercise and the
 Test to begin identify and fix the compilation errors in the code.
 
-### Exercise 2 (xx points)
+### Exercise 2 (10 points)
 
-At the moment The code runs into an exception when The User tries to [...]. Find the exception and elimante the broken
-behaviour.
+At the moment The code runs into some exceptions when The User tries to view the About page. Find the exceptions and
+eliminate the broken behaviour.
 
-### Exercise 3 (xx points)
+### Exercise 3 (30 points)
 
-To display the current Balance of an account the Function `Calcbalance2` is used. To complete this excercise identify
-and fix issues with this function regarding code style, functionality, performance, etc. For each succesfull improvement
-you get awarded points up to the maximum for this Exercise.
+To display the current Balance of an account the Function `Calcbalance2` is used. To complete this Exercise identify and
+fix issues with this function regarding code style, functionality, performance, etc. For each successful improvement you
+get awarded points up to the maximum for this Exercise.
 
-### Exercise 4 (xx points)
+### Exercise 4 (40 points)
 
 At the moment the Users are unable to register their Age. For this exercise add an age Attribute to the users. To
 Complete this task the candidate should implement all the necessary changes in the frontend, the backend and the
