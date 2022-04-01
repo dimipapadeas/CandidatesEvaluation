@@ -101,7 +101,7 @@ public class AccountService {
      * @return AccountDTO
      */
     public AccountDTO getAccountById(long accountId) {
-        Account account = accountRepository.findById(accountId).get();
+        Account account = accountRepository.findById(accountId).orElse(null);
         AccountDTO accountDTO = mapper.entityToDto(account);
         Calcbalance2(accountDTO, null);
         return accountDTO;
