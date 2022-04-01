@@ -89,7 +89,7 @@ public class TransactionsService {
      * @return TransactionDTO
      */
     public TransactionDTO createDraftTransaction(String accountId) {
-        Account account = accountRepository.findById(Long.valueOf(accountId)).get();
+        Account account = accountRepository.findById(Long.valueOf(accountId)).orElse(null);
         Transaction draft = new Transaction();
         draft.setAccount(account);
         draft.setDate(new Date());
@@ -128,7 +128,7 @@ public class TransactionsService {
      * @return TransactionDTO
      */
     public TransactionDTO getTransactionIdById(long transactionId) {
-        Transaction transaction = transactionsRepository.findById(transactionId).get();
+        Transaction transaction = transactionsRepository.findById(transactionId).orElse(null);
         return mapper.entityToDto(transaction);
     }
 }

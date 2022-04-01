@@ -37,7 +37,7 @@ public class UserService {
      * @return UserDTO
      */
     public UserDTO getUserById(long id) {
-        User user = userRepository.findById(id).get();
+        User user = userRepository.findById(id).orElse(null);
         return mapper.entityToDto(user);
     }
 
@@ -48,7 +48,7 @@ public class UserService {
      * @return UserDTO
      */
     public UserDTO updateUser(UserDTO dto) {
-        User user = userRepository.findById(dto.getId()).get();
+        User user = userRepository.findById(dto.getId()).orElse(null);
         if (user != null) {
             mapper.dtoToEntity(dto, user);
         } else {
