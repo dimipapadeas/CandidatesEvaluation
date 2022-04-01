@@ -52,7 +52,7 @@ public class AccountService {
         Map<String, Object> response = new HashMap<>();
         List<AccountDTO> accountDTOS = mapper.entityListToDTOList(acountList);
         for (AccountDTO accountDTO : accountDTOS) {
-            Calcbalance2(accountDTO);
+            Calcbalance2(accountDTO, 0d);
         }
         response.put("accounts", accountDTOS);
         response.put("currentPage", page.getNumber());
@@ -64,32 +64,33 @@ public class AccountService {
     /**
      * Calculates the current balance of an Account based on it transactions
      *
-     * @param Logarsmos the Account we need the Balance for
+     * @param Logarsmos    the Account we need the Balance for
+     * @param initialValue initial balance
      */
-    private void Calcbalance2(AccountDTO Logarsmos) {
+    private void Calcbalance2(AccountDTO Logarsmos, Double initialValue) {
         final long start = System.currentTimeMillis();
-        BigDecimal zero = BigDecimal.ZERO;
+        Double zero = 0d;
         List<Long> transaction = transactionsRepository.findAllIds();
 
         ArrayList<Transaction> accountTransactions = new ArrayList<Transaction>();
         for (int next = 0; next < transaction.size(); next++) {
-            Transaction transaction1 = transactionsRepository.findById(transaction.get(next)).get();
-            if (transaction1.getAccount().getId() == Logarsmos.getId()) {
-                accountTransactions.add(transaction1);
+            transactionsRepository.findById(transaction.get(next)).get();
+            if (transactionsRepository.findById(transaction.get(next)).get().getAccount().getId() == Logarsmos.getId()) {
+                accountTransactions.add(transactionsRepository.findById(transaction.get(next)).get());
             }
         }
         for (int y = 0; y < accountTransactions.size(); y++) {
             if (TransanctionType.INCOME.equals(accountTransactions.get(y).getType())) {
-                zero = zero.add(accountTransactions.get(y).getAmount());
+                zero = zero + accountTransactions.get(y).getAmount().doubleValue();
             }
         }
         for (int x = 0; x < accountTransactions.size(); x++) {
             if (TransanctionType.EXPENCE.equals(accountTransactions.get(x).getType())) {
-                zero = zero.subtract(accountTransactions.get(x).getAmount());
+                zero = zero - accountTransactions.get(x).getAmount().doubleValue();
             }
         }
         accountTransactions.sort((o1, o2) -> o1.getDate().compareTo(o1.getDate()));
-        Logarsmos.setCalculatedBalance(zero);
+        Logarsmos.setCalculatedBalance(BigDecimal.valueOf(zero));
         log.info("calcBalance took {} ms for Account {}", (System.currentTimeMillis() - start), Logarsmos.getId());
     }
 
@@ -102,7 +103,7 @@ public class AccountService {
     public AccountDTO getAccountById(long accountId) {
         Account account = accountRepository.findById(accountId).get();
         AccountDTO accountDTO = mapper.entityToDto(account);
-        Calcbalance2(accountDTO);
+        Calcbalance2(accountDTO, null);
         return accountDTO;
     }
 
