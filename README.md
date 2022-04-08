@@ -3,15 +3,15 @@
 A Sandbox project that has the goal to assess the development skills of a Web Developer candidate by completing
 exercises.
 
-The exercises require Java, HTML, Typescript/Javascript skills to complete.
+The exercises require Java, HTML, Typescript/Javascript and SQL skills to complete.
 
 These instructions include everything the candidate needs to know on how to download the sources of this simplified web
 application on a personal computer as well as how to deploy and run it. The instructions begin with going through the
 installation process. After the application is successfully installed and running, the candidate is ready to start with
 the exercises that follow. Each exercise awards a different amount of points totaling 100 points.
 
-The use of any IDE and/or editor to edit the source code is allowed. It is totally acceptable, that the candidate gets
-any help and information he/she needs from the internet. However it is not acceptable to ask for another person's help.
+The use of any IDE and/or editor to edit the source code is allowed. It is totally acceptable, for the candidate to get
+help and information he/she needs from the internet. However, it is not acceptable to ask for another person's help.
 
 Nevertheless, the candidate is encouraged to contact the assessor for any questions he/she might have, be it he/she
 needs any additional information, or he/she requires some help for completing the installation and/or an exercise. If
@@ -25,8 +25,8 @@ implementation tasks.
 
 ## Installation
 
-To install and run the application an active internet connection is required. Before you can build this project, you
-must install and configure the following dependencies on your machine:
+To install and run the application an active internet connection is required. Before this project can be build, the
+following dependencies must be installed and configured on the candidates machine:
 
 ### 1: JDK 17
 
@@ -44,18 +44,18 @@ absolute path of the "bin" folder under the maven folder (M2) should also be **p
 
 ### 3: Git (Optional)
 
-You need to install the Git command line client to download the sources of the application.
+The candidate can download and install the Git command line client to download the sources of the application.
 
 ### 4: Source code
 
-Download the sources of the application. If you installed Git client in the previous step, then navigate with the
+Download the sources of the application. If Git client was installed in the previous step, then navigate with the
 command line to a folder in which you want to download the source code. Run the following command:
 
 ```
-git clone https://github.com/DimiTerz/SpringBootAngular.git
+git clone 
 ```
 
-Alternatively, if you have not installed Git client in the previous step, you can download the zip from
+Alternatively, if Git client was not installed in the previous step, you can download the zip from
 
 ```
 https://
@@ -75,15 +75,16 @@ Navigate to the project folder and execute the command `mvn clean install`
 
 This should compile your application. When this process finishes navigate to `/backEnd` and run `mvn spring-boot:run`
 
-Navigate to http://localhost:8080 in your browser to open the application. There are 3 available Users you can use to
+Navigate to http://localhost:8080 in your browser to open the application. There are 4 available Users you can use to
 login to the application. Username and password are:
 
 `JDoe`, `LDoe`, `SScotts` and `admin`.
 
 To stop the application, just terminate the execution of the previous command. After making changes to the code stop the
-application repeat step `6`
+application and repeat step `6`
 
-More information regarding the components of the Application can be found in further README files.
+More information regarding the components of the Application can be found in further README files in each of the project
+modules.
 
 ## Excercices
 
@@ -92,18 +93,18 @@ The following tasks award points up to a maximum of 100.
 ### Installation and Exercise 1 (20 points)
 
 At the moment the Application can not be compiled. The code has some deliberate placed errors. For this exercise and the
-Test to begin identify and fix the compilation errors in the code.
+Test to begin the candidate should identify and fix the compilation errors in the code.
 
 ### Exercise 2 (10 points)
 
-At the moment The code runs into some exceptions when The User tries to view the About page. Find the exceptions and
-eliminate the broken behaviour.
+At the moment The code runs into some exceptions when The User tries to view the About page. The candidate should Find
+the exceptions and eliminate the broken behaviour.
 
 ### Exercise 3 (30 points)
 
-To display the current Balance of an account the Function `Calcbalance2` is used. To complete this Exercise identify and
-fix issues with this function regarding code style, functionality, performance, etc. For each successful improvement you
-get awarded points up to the maximum for this Exercise.
+To display the current Balance of an account the Function `Calcbalance2` is used. To complete this Exercise the
+candidate should identify and fix issues with this function regarding code style, functionality, performance, etc. For
+each successful improvement the candidate gets awarded with points up to the maximum for this Exercise.
 
 ### Exercise 4 (40 points)
 
@@ -113,11 +114,19 @@ database.
 
 ### Extra Credit Exercise
 
+This Exercise is optional and is designed to give credits for design and logical thinking. To score points the candidate
+should implement an export functionality for the Transactions listed in an Account. The candidate is free to use any
+libraries and can implement it in any way. The only conditions in place are the following:
+
+#### The data should be exported to a file in `csv` format.
+
+#### The export should de triggered from the Account view with a button.
+
 ## Delivery
 
 When finished the candidate should compress the root folder of the project and send it to the assessor by email. Along
-with the compressed file a screenshot of the candidate's browser with the Application running should be sent in order to
-verify that the installation was successfully completed.
+with the compressed file a screenshot of the candidate's browser with the Application running and a user logged in
+should be sent in order to verify that the installation was successfully completed.
 
 The deadline to send the compressed file is determined by the assessor. Normally it should be exactly three days after
 the test has started.
