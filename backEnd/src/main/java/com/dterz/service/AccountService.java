@@ -13,8 +13,6 @@ import liquibase.repackaged.org.apache.commons.collections4.CollectionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -42,7 +40,7 @@ public class AccountService {
      * @param username    the username
      * @return ResponseEntity<Map < String, Object>>
      */
-    public ResponseEntity<Map<String, Object>> getAll(PageRequest pageRequest, String username) {
+    public Map<String, Object> getAll(PageRequest pageRequest, String username) {
         User user = userRepository.findByUserName(username);
         Page<Account> page;
         if (user != null) {
@@ -58,7 +56,7 @@ public class AccountService {
         response.put("currentPage", page.getNumber());
         response.put("totalItems", page.getTotalElements());
         response.put("totalPages", page.getTotalPages());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return response;
     }
 
     /**

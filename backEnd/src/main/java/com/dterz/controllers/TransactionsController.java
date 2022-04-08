@@ -5,6 +5,7 @@ import com.dterz.service.TransactionsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,7 +83,8 @@ public class TransactionsController {
                                                               @RequestParam(name = "type", defaultValue = "") String type,
                                                               @RequestParam(name = "userID", defaultValue = "") String userID) {
         PageRequest pageRequest = PageRequest.of(page, size, direction.equals("asc") ? Sort.by(sort).ascending() : Sort.by(sort).descending());
-        return transactionsService.getAllForUser(pageRequest, userID, description);
+        Map<String, Object> response = transactionsService.getAllForUser(pageRequest, userID, description);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -102,6 +104,7 @@ public class TransactionsController {
                                                                 @RequestParam(name = "size", defaultValue = "5") int size,
                                                                 @RequestParam(name = "accountId", defaultValue = "") String accountId) {
         PageRequest pageRequest = PageRequest.of(page, size, direction.equals("asc") ? Sort.by(sort).ascending() : Sort.by(sort).descending());
-        return transactionsService.getAllForAccount(pageRequest, accountId);
+        Map<String, Object> response = transactionsService.getAllForAccount(pageRequest, accountId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
