@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,7 +36,7 @@ public class TransactionsService {
      * @param description the input for filtering the Transactions by description
      * @return ResponseEntity<Map < String, Object>>
      */
-    public ResponseEntity<Map<String, Object>> getAllForUser(PageRequest pageRequest, String username, String description) {
+    public Map<String, Object> getAllForUser(PageRequest pageRequest, String username, String description) {
         User user = userRepository.findByUserName(username);
         Page<Transaction> page;
         if (StringUtils.isNotEmpty(description)) {
@@ -52,7 +50,7 @@ public class TransactionsService {
         response.put("currentPage", page.getNumber());
         response.put("totalItems", page.getTotalElements());
         response.put("totalPages", page.getTotalPages());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return response;
     }
 
     /**
@@ -62,7 +60,7 @@ public class TransactionsService {
      * @param accountId   the id of the User to filter the transactions by
      * @return ResponseEntity<Map < String, Object>>
      */
-    public ResponseEntity<Map<String, Object>> getAllForAccount(PageRequest pageRequest, String accountId) {
+    public Map<String, Object> getAllForAccount(PageRequest pageRequest, String accountId) {
         Page<Transaction> page = transactionsRepository.findByAccountId(Long.parseLong(accountId), pageRequest);
         List<Transaction> allByAccount = page.getContent();
         Map<String, Object> response = new HashMap<>();
@@ -70,7 +68,7 @@ public class TransactionsService {
         response.put("currentPage", page.getNumber());
         response.put("totalItems", page.getTotalElements());
         response.put("totalPages", page.getTotalPages());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return response;
     }
 
     /**
