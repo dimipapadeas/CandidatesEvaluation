@@ -23,9 +23,6 @@ public class User {
     @Column(name = "u_Name")
     private String userName;
 
-    @Column(name = "salt")
-    private String salt;
-
     @Column(name = "pass")
     private String pass;
 

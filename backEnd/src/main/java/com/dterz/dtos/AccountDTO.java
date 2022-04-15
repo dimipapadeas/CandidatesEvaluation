@@ -1,31 +1,25 @@
 package com.dterz.dtos;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class AccountDTO {
-
-    @Getter
-    @Setter
+    
     private long id;
 
-    @Getter
-    @Setter
     private String description;
 
-    @Getter
-    @Setter
     private BigDecimal calculatedBalance;
 
-    @Getter
-    @Setter
     private Date lastTransaction;
 
-    @Getter
-    @Setter
     private Set<UserDTO> users;
 }

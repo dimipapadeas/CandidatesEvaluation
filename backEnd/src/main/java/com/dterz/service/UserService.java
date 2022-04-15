@@ -1,12 +1,14 @@
 package com.dterz.service;
 
-import com.dterz.Constants;
 import com.dterz.dtos.UserDTO;
 import com.dterz.mappers.UserMapper;
 import com.dterz.model.User;
+import com.dterz.model.UserPrincipal;
 import com.dterz.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,11 +17,11 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserService {
-
+public class UserService implements UserDetailsService {
+    
     private final UserRepository userRepository;
     private final UserMapper mapper;
-
+    
     /**
      * Gets all the available Users currently in the System
      *
@@ -40,7 +42,7 @@ public class UserService {
         User user = userRepository.findById(id).orElse(null);
         return mapper.entityToDto(user);
     }
-
+    
     /**
      * Updates the User with the data from the Front end
      *
@@ -53,7 +55,8 @@ public class UserService {
             mapper.dtoToEntity(dto, user);
         } else {
             user = mapper.dtoToEntity(dto);
-            user.setPass(DigestUtils.sha256Hex(dto.getSalt() + dto.getPass()));
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user.setPass(encoder.encode(dto.getPass()));
         }
         userRepository.save(user);
         return mapper.entityToDto(user);
@@ -75,24 +78,19 @@ public class UserService {
      */
     public UserDTO createDraftUser() {
         User draftUser = new User();
-        draftUser.setSalt(createSalt());
         return mapper.entityToDto(draftUser);
     }
-
+    
     /**
-     * Creates a random Alphanumerical character sequence to use as Salt for the encrypted password
+     * Gets a User by its Username
      *
-     * @return String
+     * @param userName the userName of the User requested
+     * @return User
      */
-    private String createSalt() {
-        int count = 7;
-        StringBuilder builder = new StringBuilder();
-        while (count-- != 0) {
-            int character = (int) (Math.random() * Constants.ALPHA_NUMERIC_STRING.length());
-            builder.append(Constants.ALPHA_NUMERIC_STRING.charAt(character));
-        }
-        return builder.toString();
+    @Override
+    public UserPrincipal loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = userRepository.findByUserName(userName);
+        return new UserPrincipal(user);
     }
-
 }
 

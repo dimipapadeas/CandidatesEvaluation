@@ -30,7 +30,6 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CLIENT_USER"/>
             </column>
             <column name="u_name" type="VARCHAR(255)"/>
-            <column name="salt" type="VARCHAR(255)"/>
             <column name="pass" type="VARCHAR(255)"/>
             <column name="f_name" type="VARCHAR(255)"/>
             <column name="s_name" type="VARCHAR(255)"/>
@@ -45,15 +44,6 @@
             </column>
             <column name="name" type="VARCHAR(255)"/>
             <column name="description" type="VARCHAR(255)"/>
-        </createTable>
-    </changeSet>
-    <changeSet id="1645272976866-5" author="dimitris (generated)">
-        <createTable tableName="token">
-            <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TOKEN"/>
-            </column>
-            <column name="token" type="VARCHAR(255)"/>
-            <column name="user_name" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
     <changeSet id="1645272976866-6" author="dimitris (generated)">
@@ -112,18 +102,18 @@
 
     <changeSet id="1645272976866-14" author="dimitris ">
         <sql>
-            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
-            VALUES (1, '', 'admin', 'def1de41e3e48eff838277272a8f0e5bf9ad6d5807a0905afb76e40490d9da2c', 'admin',
-                    'QB5Y2AU', true, 'admin');
-            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
-            VALUES (2, '', 'Jhon', '554ca4fe55ee5d5361bdc5c41feb3c5b9f93afcb6a60098ba3e2c6e365dde249', 'Doe',
-                    'IYXN2LC', false, 'JDoe');
-            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
-            VALUES (3, '', 'Sheena', 'a45986f9eb8a65445c62beff2c89abade49787ba1493e8861bb89238a8565071', 'Scott',
-                    'PGR4AJD', false, 'SScotts');
-            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SALT, SUPER_ADMIN, U_NAME)
-            VALUES (4, '', 'Lisa', 'b53b8b6c3faad288063df214b7fb8cefa7b63aa3ee8ff75a2f06f5f9728930d8', 'Doe',
-                    '1G64AJG', false, 'LDoe');
+            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SUPER_ADMIN, U_NAME)
+            VALUES (1, '', 'admin', '$2a$10$yYvYMf5shG4v6k4jUM1J0OgNtE5m746Ibo7uQdJqC2V8.wRzrjP6u', 'admin', true,
+                    'admin');
+            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SUPER_ADMIN, U_NAME)
+            VALUES (2, '', 'Jhon', '$2a$10$Kw2IhgmfVbqK2xq.T3InYuYXj6PMy/lGktJSzjZ7Sjfg1drLksNFm', 'Doe', false,
+                    'JDoe');
+            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SUPER_ADMIN, U_NAME)
+            VALUES (3, '', 'Sheena', '$2a$10$jmHZoWKXV70ZFm9g0Eh7FOrzQkWvt8tTiIjJJSRzo1K44O8vn5V6a', 'Scott', false,
+                    'SScotts');
+            INSERT INTO CLIENT_USER (ID, COMMENTS, F_NAME, PASS, S_NAME, SUPER_ADMIN, U_NAME)
+            VALUES (4, '', 'Lisa', '$2a$10$tvA5qZgFzvA6skCpJsg3N.5ZV1bw2iXSZLB6qOybiCo0xGNCQDWUK', 'Doe', false,
+                    'LDoe');
 
             INSERT INTO ACCOUNT (ID, DESCRIPTION, LAST_TRANSACTION)
             VALUES (1, 'Does Savings Account', null);
