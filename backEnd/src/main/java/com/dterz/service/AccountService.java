@@ -9,28 +9,28 @@ import com.dterz.model.User;
 import com.dterz.repositories.AccountRepository;
 import com.dterz.repositories.TransactionsRepository;
 import com.dterz.repositories.UserRepository;
-import liquibase.repackaged.org.apache.commons.collections4.CollectionUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountMapper mapper;
     private final UserRepository userRepository;
     private final TransactionsRepository transactionsRepository;
+
+    ArrayList<Transaction> accountTransactions = new ArrayList<Transaction>();
 
     /**
      * Gets all Accounts currently in the System.
@@ -51,7 +51,9 @@ public class AccountService {
         List<Account> acountList = page.getContent();
         Map<String, Object> response = new HashMap<>();
         List<AccountDTO> accountDTOS = mapper.entityListToDTOList(acountList);
-        accountDTOS.forEach(this::calcBalance);
+        for (AccountDTO accountDTO : accountDTOS) {
+            Calcbalance2(accountDTO, 0d);
+        }
         response.put("accounts", accountDTOS);
         response.put("currentPage", page.getNumber());
         response.put("totalItems", page.getTotalElements());
@@ -62,20 +64,40 @@ public class AccountService {
     /**
      * Calculates the current balance of an Account based on it transactions
      *
-     * @param account the Account we need the Balance for
+     * @param Logarsmos    the Account we need the Balance for
+     * @param initialValue initial balance
      */
-    private void calcBalance(AccountDTO account) {
-        BigDecimal balance = BigDecimal.ZERO;
-        List<Transaction> income = transactionsRepository.findByTypeAndAccount_Id(TransanctionType.INCOME, account.getId());
-        List<Transaction> expences = transactionsRepository.findByTypeAndAccount_Id(TransanctionType.EXPENCE, account.getId());
-        if (CollectionUtils.isNotEmpty(income)) {
-            balance = income.stream().map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    private void Calcbalance2(Object Logarsmos, Double initialValue) {
+        final long start = System.currentTimeMillis();
+        Double zero = BigDecimal.ZERO.doubleValue();
+        List<Long> transaction = transactionsRepository.findAllIds();
+
+        int next = 0;
+        for (next = 0; next < transaction.size(); next++) {
+            transactionsRepository.findById(transaction.get(next)).get();
+            if (transactionsRepository.findById(transaction.get(next)).get().getAccount().getId() == ((AccountDTO) Logarsmos).getId())
+                accountTransactions.add(transactionsRepository.findById(transaction.get(next)).get());
         }
-        if (CollectionUtils.isNotEmpty(expences)) {
-            BigDecimal expen = expences.stream().map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
-            balance = balance.subtract(expen);
+        for (int y = 0; y < accountTransactions.size(); y++) {
+            if (TransanctionType.INCOME.equals(accountTransactions.get(y).getType())) {
+                zero = zero + accountTransactions.get(y).getAmount().doubleValue();
+            }
         }
-        account.setCalculatedBalance(balance);
+        for (int x = 0; x < accountTransactions.size(); x++)
+            if (TransanctionType.EXPENCE.equals(accountTransactions.get(x).getType())) {
+                zero = zero - accountTransactions.get(x).getAmount().doubleValue();
+            }
+        accountTransactions.sort(new Comparator<Transaction>() {
+
+            @Override
+            public int compare(Transaction o1, Transaction o2) {
+                return o1.getDate().compareTo(o1.getDate());
+            }
+
+        });
+        ((AccountDTO) Logarsmos).setCalculatedBalance(BigDecimal.valueOf(zero));
+        accountTransactions.clear();
+        log.info("calcBalance took {} ms for Account {}", (System.currentTimeMillis() - start), ((AccountDTO) Logarsmos).getId());
     }
 
     /**
@@ -87,7 +109,7 @@ public class AccountService {
     public AccountDTO getAccountById(long accountId) {
         Account account = accountRepository.findById(accountId).orElse(null);
         AccountDTO accountDTO = mapper.entityToDto(account);
-        calcBalance(accountDTO);
+        Calcbalance2(accountDTO, null);
         return accountDTO;
     }
 
