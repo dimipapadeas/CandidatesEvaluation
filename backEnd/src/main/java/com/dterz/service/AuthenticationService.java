@@ -36,4 +36,8 @@ public class AuthenticationService {
         String token = jwtService.generateToken(userDetails);
         return JwtResponse.builder().jwttoken(token).userId(userDetails.getUserId()).isAdmin(userDetails.isSuperAdmin()).build();
     }
+    
+    public JwtResponse logout(String username) {
+        return null;
+    }
 }

@@ -57,17 +57,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		//@formatter:off
-		httpSecurity.cors().configurationSource(request -> {
+		httpSecurity.csrf().disable()
+				.cors().configurationSource(request -> {
 					var cors = new CorsConfiguration();
 					cors.setAllowedOrigins(List.of("http://localhost:4200", "http://127.0.0.1:80"));
 					cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 					cors.setAllowedHeaders(List.of("*"));
 					return cors;
-				}).and().authorizeRequests()
+				})
+				.and().authorizeRequests()
 				.anyRequest().authenticated()
-				.and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		
+				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 		//@formatter:on
 	}

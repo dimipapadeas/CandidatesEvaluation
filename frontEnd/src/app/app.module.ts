@@ -25,6 +25,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {AccountComponent} from './account/account.component';
 import {TransactionComponent} from './transaction/transaction.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatSortModule,
     MatPaginatorModule,
     MatTabsModule,
+    ToastrModule.forRoot()
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true

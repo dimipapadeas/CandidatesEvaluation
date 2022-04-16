@@ -49,6 +49,10 @@ export class HomeComponent implements OnInit {
     this.isAdmin = (/true/i).test(sessionStorage.getItem("userAdmin"));
     this.createFilterForm();
     this.filterValues = this.form.value;
+    this.populateMask();
+  }
+
+  private populateMask() {
     this.getTransactionsForUser(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString(), this.filterValues.description, this.filterValues.type).subscribe();
     this.getAccountsForUser().subscribe();
   }

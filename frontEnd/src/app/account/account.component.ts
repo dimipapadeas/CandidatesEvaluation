@@ -8,6 +8,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatTableDataSource} from "@angular/material/table";
 import {tap} from "rxjs/operators";
 import {User} from "../services/user.service";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-account',
@@ -26,7 +27,7 @@ export class AccountComponent implements OnInit {
 
   @Output() pageChange: EventEmitter<PageEvent> = new EventEmitter();
 
-  constructor(private transactionService: TransactionService, private accountService: AccountService, private route: ActivatedRoute, private router: Router) {
+  constructor(private transactionService: TransactionService, private accountService: AccountService, private route: ActivatedRoute, private router: Router, private notifyService: NotificationService) {
   }
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -47,28 +48,34 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.paramId = this.route.snapshot.params.id;
+    this.createForm();
+    if (this.paramId) {
+      this.populateMask();
+    } else {
+      this.populateMaskFromDraft();
+    }
+  }
+
+  private createForm() {
     this.form = new FormGroup({
       id: new FormControl(null),
       calculatedBalance: new FormControl({value: '', disabled: true}),
       description: new FormControl({value: '', disabled: this.paramId}, [Validators.required, Validators.minLength(3)]),
     });
-
-    if (this.paramId) {
-      this.populateMask();
-    } else {
-      this.accountService.createDraftAccount().subscribe(response => {
-        this.form.patchValue({...response});
-      });
-    }
   }
 
   private populateMask() {
-    this.accountService.getAccountById(this.paramId).subscribe(response => {
-      this.form.patchValue({...response});
-      this.userList = new MatTableDataSource(response.users);
-    });
+    this.getAccount(this.paramId).subscribe();
     this.filterValues = this.form.value;
     this.getTransactionsForAccount(this.tableSort, this.tableSortDir, this.dataPageIndex.toString(), this.dataPageSize.toString()).subscribe();
+  }
+
+  private populateMaskFromDraft() {
+    this.accountService.createDraftAccount().pipe(
+      tap((response: any) => {
+        this.form.patchValue({...response.body});
+      })
+    ).subscribe();
   }
 
   getServerData(event: PageEvent) {
@@ -99,6 +106,15 @@ export class AccountComponent implements OnInit {
     );
   }
 
+  private getAccount(paramId: string) {
+    return this.accountService.getAccountById(paramId).pipe(
+      tap((response: any) => {
+        this.form.patchValue({...response.body});
+        this.userList = new MatTableDataSource(response.body.users);
+      })
+    );
+  }
+
   addTransaction() {
     this.router.navigate(['/addTransaction', this.paramId]);
   }
@@ -119,15 +135,16 @@ export class AccountComponent implements OnInit {
     if (form.valid) {
       this.form.markAsPristine();
       this.accountService.updateAccount(form.getRawValue()).subscribe(response => {
+        this.notifyService.showSuccess("Save Account completed");
         this.router.navigate(['']);
       });
     } else {
       form.markAsDirty();
-      alert("Form is invalid")
+      this.notifyService.showError("Form is invalid");
     }
   }
 
   addUser() {
-    alert("add user");
+    this.notifyService.showWarning("Functionality not supported yet");
   }
 }

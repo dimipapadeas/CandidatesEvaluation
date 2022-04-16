@@ -25,15 +25,20 @@ export class UserService {
   }
 
   public getAll() {
-    return this.httpClient.get(environment.apiUrl + '/user/getAll')
+    return this.httpClient.get(
+      environment.apiUrl + '/user/getAll', {
+        observe: 'response'
+      })
   }
 
   getUserById(userId: any) {
-    return this.httpClient.get<User>(`${environment.apiUrl + '/user/getUserById'}/${userId}`)
+    return this.httpClient.get<User>(`${environment.apiUrl + '/user/getUserById'}/${userId}`, {
+      observe: 'response'
+    })
   }
 
   updateUser(user: User): Observable<User> {
-    return this.httpClient.put<User>(`${environment.apiUrl + '/user/update'}`, user);
+    return this.httpClient.post<User>(`${environment.apiUrl + '/user/update'}`, user);
   }
 
   deleteUser(userId: any) {
@@ -41,6 +46,8 @@ export class UserService {
   }
 
   createDraftUser() {
-    return this.httpClient.get<User>(`${environment.apiUrl + '/user/createDraftUser'}`)
+    return this.httpClient.get<User>(`${environment.apiUrl + '/user/createDraftUser'}`, {
+      observe: 'response'
+    })
   }
 }

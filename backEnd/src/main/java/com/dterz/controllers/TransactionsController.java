@@ -5,11 +5,8 @@ import com.dterz.service.TransactionsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/transactions/")
@@ -28,7 +25,7 @@ public class TransactionsController {
     public void delete(@PathVariable("transactionId") long transactionId) {
         transactionsService.deleteTransaction(transactionId);
     }
-
+    
     /**
      * Create and returns a new empty Transaction Object for the Account specified
      *
@@ -36,10 +33,10 @@ public class TransactionsController {
      * @return TransactionDTO
      */
     @GetMapping("createDraftTransaction/{accountId}")
-    public TransactionDTO createDraftTransaction(@PathVariable("accountId") String accountId) {
-        return transactionsService.createDraftTransaction(accountId);
+    public ResponseEntity<TransactionDTO> createDraftTransaction(@PathVariable("accountId") String accountId) {
+        return ResponseEntity.ok(transactionsService.createDraftTransaction(accountId));
     }
-
+    
     /**
      * Updates the Transaction with the data from the Front end
      *
@@ -47,10 +44,10 @@ public class TransactionsController {
      * @return TransactionDTO
      */
     @PutMapping("update")
-    public TransactionDTO update(@RequestBody TransactionDTO transaction) {
-        return transactionsService.updateTransaction(transaction);
+    public ResponseEntity<TransactionDTO> update(@RequestBody TransactionDTO transaction) {
+        return ResponseEntity.ok(transactionsService.updateTransaction(transaction));
     }
-
+    
     /**
      * Gets a Transaction by its id
      *
@@ -58,8 +55,8 @@ public class TransactionsController {
      * @return TransactionDTO
      */
     @GetMapping("getTransactionIdById/{transactionId}")
-    public TransactionDTO getTransactionIdById(@PathVariable("transactionId") long transactionId) {
-        return transactionsService.getTransactionIdById(transactionId);
+    public ResponseEntity<TransactionDTO> getTransactionIdById(@PathVariable("transactionId") long transactionId) {
+        return ResponseEntity.ok(transactionsService.getTransactionIdById(transactionId));
     }
 
     /**
@@ -75,16 +72,15 @@ public class TransactionsController {
      * @return ResponseEntity<Map < String, Object>>
      */
     @GetMapping("getAllForUser")
-    public ResponseEntity<Map<String, Object>> getAllFiltered(@RequestParam(name = "sort", defaultValue = "date") String sort,
-                                                              @RequestParam(name = "direction", defaultValue = "asc") String direction,
-                                                              @RequestParam(name = "page", defaultValue = "0") int page,
-                                                              @RequestParam(name = "size", defaultValue = "5") int size,
-                                                              @RequestParam(name = "description", defaultValue = "") String description,
-                                                              @RequestParam(name = "type", defaultValue = "") String type,
-                                                              @RequestParam(name = "userID", defaultValue = "") String userID) {
+    public ResponseEntity<?> getAllFiltered(@RequestParam(name = "sort", defaultValue = "date") String sort,
+                                            @RequestParam(name = "direction", defaultValue = "asc") String direction,
+                                            @RequestParam(name = "page", defaultValue = "0") int page,
+                                            @RequestParam(name = "size", defaultValue = "5") int size,
+                                            @RequestParam(name = "description", defaultValue = "") String description,
+                                            @RequestParam(name = "type", defaultValue = "") String type,
+                                            @RequestParam(name = "userID", defaultValue = "") String userID) {
         PageRequest pageRequest = PageRequest.of(page, size, direction.equals("asc") ? Sort.by(sort).ascending() : Sort.by(sort).descending());
-        Map<String, Object> response = transactionsService.getAllForUser(pageRequest, userID, description);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ResponseEntity.ok(transactionsService.getAllForUser(pageRequest, userID, description));
     }
 
     /**
@@ -98,13 +94,12 @@ public class TransactionsController {
      * @return ResponseEntity<Map < String, Object>>
      */
     @GetMapping("getAllForAccount")
-    public ResponseEntity<Map<String, Object>> getAllForAccount(@RequestParam(name = "sort", defaultValue = "date") String sort,
-                                                                @RequestParam(name = "direction", defaultValue = "asc") String direction,
-                                                                @RequestParam(name = "page", defaultValue = "0") int page,
-                                                                @RequestParam(name = "size", defaultValue = "5") int size,
-                                                                @RequestParam(name = "accountId", defaultValue = "") String accountId) {
+    public ResponseEntity<?> getAllForAccount(@RequestParam(name = "sort", defaultValue = "date") String sort,
+                                              @RequestParam(name = "direction", defaultValue = "asc") String direction,
+                                              @RequestParam(name = "page", defaultValue = "0") int page,
+                                              @RequestParam(name = "size", defaultValue = "5") int size,
+                                              @RequestParam(name = "accountId", defaultValue = "") String accountId) {
         PageRequest pageRequest = PageRequest.of(page, size, direction.equals("asc") ? Sort.by(sort).ascending() : Sort.by(sort).descending());
-        Map<String, Object> response = transactionsService.getAllForAccount(pageRequest, accountId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ResponseEntity.ok(transactionsService.getAllForAccount(pageRequest, accountId));
     }
 }

@@ -50,7 +50,8 @@ export class TransactionService {
   }
 
   deleteTransaction(transactionId) {
-    return this.httpClient.delete(`${environment.apiUrl + '/transactions/delete'}/${transactionId}`);
+    return this.httpClient.delete(
+      `${environment.apiUrl + '/transactions/delete'}/${transactionId}`);
   }
 
   updateTransaction(transaction: Transaction): Observable<Transaction> {
@@ -58,10 +59,15 @@ export class TransactionService {
   }
 
   createDraftTransaction(accountId) {
-    return this.httpClient.get<Transaction>(`${environment.apiUrl + '/transactions/createDraftTransaction'}/${accountId}`)
+    return this.httpClient.get(
+      `${environment.apiUrl + '/transactions/createDraftTransaction'}/${accountId}`, {
+        observe: 'response'
+      })
   }
 
   getTransactionById(transactionId: any) {
-    return this.httpClient.get<Transaction>(`${environment.apiUrl + '/transactions/getTransactionIdById'}/${transactionId}`)
+    return this.httpClient.get(`${environment.apiUrl + '/transactions/getTransactionIdById'}/${transactionId}`, {
+      observe: 'response'
+    })
   }
 }

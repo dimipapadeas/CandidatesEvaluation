@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class JwtAuthenticationController {
 
     private final AuthenticationService authenticationService;
-
+    
     /**
      * Authenticates the User from the credentials provided during log in
      *
@@ -22,8 +22,14 @@ public class JwtAuthenticationController {
      * @throws Exception throws an Exception
      */
     @RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
         JwtResponse response = authenticationService.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        return ResponseEntity.ok(response);
+    }
+    
+    @RequestMapping(value = "/api/logout", method = RequestMethod.POST)
+    public ResponseEntity<?> logout(@RequestBody String username) {
+        JwtResponse response = authenticationService.logout(username);
         return ResponseEntity.ok(response);
     }
 }

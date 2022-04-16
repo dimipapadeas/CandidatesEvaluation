@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-user',
@@ -14,9 +15,15 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getAll().subscribe((data: any[]) => {
-      this.users = data;
-    })
+    this.populateMask();
+  }
+
+  private populateMask() {
+    this.userService.getAll().pipe(
+      tap((response: any) => {
+        this.users = response.body;
+      })
+    ).subscribe();
   }
 
   editUser(useId) {

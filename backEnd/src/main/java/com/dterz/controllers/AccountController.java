@@ -4,11 +4,8 @@ import com.dterz.dtos.AccountDTO;
 import com.dterz.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/account/")
@@ -25,8 +22,8 @@ public class AccountController {
 	 * @return AccountDTO
 	 */
 	@GetMapping("getAccountById/{accountId}")
-	public AccountDTO getAccountById(@PathVariable("accountId") long accountId) {
-		return accountService.getAccountById(accountId);
+	public ResponseEntity<AccountDTO> getAccountById(@PathVariable("accountId") long accountId) {
+		return ResponseEntity.ok(accountService.getAccountById(accountId));
 	}
 	
 	/**
@@ -35,8 +32,8 @@ public class AccountController {
 	 * @return AccountDTO
 	 */
 	@GetMapping("draftAccount")
-	public AccountDTO createAccount() {
-		return accountService.draftAccount();
+	public ResponseEntity<AccountDTO> createAccount() {
+		return ResponseEntity.ok(accountService.draftAccount());
 	}
 	
 	/**
@@ -47,10 +44,9 @@ public class AccountController {
 	 * @return ResponseEntity<Map < String, Object>>
 	 */
 	@GetMapping("getAll")
-	public ResponseEntity<Map<String, Object>> getByUsername(@RequestParam(name = "userID", defaultValue = "") String userID) {
+	public ResponseEntity<?> getByUsername(@RequestParam(name = "userID", defaultValue = "") String userID) {
 		PageRequest pageRequest = PageRequest.of(0, 100);
-		Map<String, Object> response = accountService.getAll(pageRequest, userID);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return ResponseEntity.ok(accountService.getAll(pageRequest, userID));
 	}
 	
 	/**
@@ -60,7 +56,7 @@ public class AccountController {
 	 * @return AccountDTO
 	 */
 	@PutMapping("update")
-	public AccountDTO update(@RequestBody AccountDTO accountDTO) {
-		return accountService.updateAccount(accountDTO);
+	public ResponseEntity<AccountDTO> update(@RequestBody AccountDTO accountDTO) {
+		return ResponseEntity.ok(accountService.updateAccount(accountDTO) );
 	}
 }

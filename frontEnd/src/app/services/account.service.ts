@@ -31,11 +31,16 @@ export class AccountService {
   }
 
   getAccountById(accountId: any) {
-    return this.httpClient.get<Account>(`${environment.apiUrl + '/account/getAccountById'}/${accountId}`)
+    return this.httpClient.get(
+      `${environment.apiUrl + '/account/getAccountById'}/${accountId}`, {
+        observe: 'response'
+      })
   }
 
   createDraftAccount() {
-    return this.httpClient.get<Account>(`${environment.apiUrl + '/account/draftAccount'}`)
+    return this.httpClient.get(`${environment.apiUrl + '/account/draftAccount'}`, {
+      observe: 'response'
+    })
   }
 
   updateAccount(account: Account): Observable<Account> {

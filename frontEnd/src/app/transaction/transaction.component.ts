@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Transaction, TransactionService} from "../services/transaction.service";
+import {tap} from "rxjs/operators";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-transaction',
@@ -10,17 +12,23 @@ import {Transaction, TransactionService} from "../services/transaction.service";
 })
 export class TransactionComponent implements OnInit {
 
-  form: FormGroup;
-
-  types = ['EXPENCE', 'INCOME'];
-
-
-  constructor(private transactionService: TransactionService, private router: Router, private route: ActivatedRoute) {
+  constructor(private transactionService: TransactionService, private router: Router, private route: ActivatedRoute, private notifyService: NotificationService) {
   }
 
   public transaction: Transaction;
+  form: FormGroup;
+  types = ['EXPENCE', 'INCOME'];
 
   ngOnInit(): void {
+    this.createForm();
+    if (this.route.snapshot.params.accountId) {
+      this.populateMaskFromDraft();
+    } else if (this.route.snapshot.params.transactionId) {
+      this.populateMask();
+    }
+  }
+
+  private createForm() {
     this.form = new FormGroup({
       id: new FormControl(null),
       amount: new FormControl({value: 0}, Validators.required),
@@ -30,15 +38,22 @@ export class TransactionComponent implements OnInit {
       userName: new FormControl({value: '', disabled: true}),
       accountName: new FormControl({value: '', disabled: true}),
     });
-    if (this.route.snapshot.params.accountId) {
-      this.transactionService.createDraftTransaction(this.route.snapshot.params.accountId).subscribe(response => {
-        this.form.patchValue({...response});
-      });
-    } else if (this.route.snapshot.params.transactionId) {
-      this.transactionService.getTransactionById(this.route.snapshot.params.transactionId).subscribe(response => {
-        this.form.patchValue({...response});
-      });
-    }
+  }
+
+  private populateMask() {
+    this.transactionService.getTransactionById(this.route.snapshot.params.transactionId).pipe(
+      tap((response: any) => {
+        this.form.patchValue({...response.body});
+      })
+    ).subscribe();
+  }
+
+  private populateMaskFromDraft() {
+    this.transactionService.createDraftTransaction(this.route.snapshot.params.accountId).pipe(
+      tap((response: any) => {
+        this.form.patchValue({...response.body});
+      })
+    ).subscribe();
   }
 
   formSubmit(form: FormGroup) {
@@ -47,6 +62,7 @@ export class TransactionComponent implements OnInit {
       this.transaction.userName = sessionStorage.getItem('username');
       this.form.markAsPristine();
       this.transactionService.updateTransaction(this.transaction).subscribe(response => {
+        this.notifyService.showSuccess("Save Transaction completed");
         if (this.route.snapshot.params.accountId) {
           this.transactionService.createDraftTransaction(this.route.snapshot.params.accountId).subscribe(response => {
             this.router.navigate(['/viewAccount', this.route.snapshot.params.accountId]);
@@ -59,7 +75,7 @@ export class TransactionComponent implements OnInit {
       });
     } else {
       form.markAsDirty();
-      alert("Form is invalid")
+      this.notifyService.showError("Form is invalid");
     }
   }
 

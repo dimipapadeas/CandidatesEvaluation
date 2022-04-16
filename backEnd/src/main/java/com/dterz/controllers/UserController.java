@@ -4,9 +4,8 @@ import com.dterz.dtos.UserDTO;
 import com.dterz.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/user/")
@@ -16,17 +15,17 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-
+    
     /**
      * Gets all the available Users currently in the System
      *
      * @return List<UserDTO>
      */
     @GetMapping("getAll")
-    public List<UserDTO> getUser() {
-        return userService.getAllUsers();
+    public ResponseEntity<?> getUser() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
-
+    
     /**
      * Gets a User by its id
      *
@@ -34,30 +33,30 @@ public class UserController {
      * @return UserDTO
      */
     @GetMapping("getUserById/{userId}")
-    public UserDTO getUserById(@PathVariable("userId") long userId) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("userId") long userId) {
         log.debug("Called: getuser with {}", userId);
-        return userService.getUserById(userId);
+        return ResponseEntity.ok(userService.getUserById(userId));
     }
-
+    
     /**
      * Updates the User with the data from the Front end
      *
      * @param user the updated User
      * @return UserDTO
      */
-    @PutMapping("update")
-    public UserDTO update(@RequestBody UserDTO user) {
-        return userService.updateUser(user);
+    @PostMapping("update")
+    public ResponseEntity<UserDTO> update(@RequestBody UserDTO user) {
+        return ResponseEntity.ok(userService.updateUser(user));
     }
-
+    
     /**
      * Creates and returns a new empty User Object
      *
      * @return UserDTO
      */
     @GetMapping("createDraftUser")
-    public UserDTO createDraftUser() {
-        return userService.createDraftUser();
+    public ResponseEntity<UserDTO> createDraftUser() {
+        return ResponseEntity.ok(userService.createDraftUser());
     }
 
     /**
