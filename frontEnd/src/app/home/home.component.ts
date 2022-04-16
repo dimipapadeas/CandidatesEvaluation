@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['description', 'type', 'date', 'account', 'amount'];
-  displayedColumnsAccount: string[] = ['description', 'calculatedBalance', 'actions'];
+  displayedColumnsAccount: string[] = ['description', 'calculatedBalance'];
 
   @Input() dataLength: number;
   @Input() dataPageIndex: number = 0; // Which index is the current for the data paginator
@@ -139,5 +139,10 @@ export class HomeComponent implements OnInit {
   viewAccount(id, $event: MouseEvent) {
     $event.stopPropagation();
     this.router.navigate(['/viewAccount', id]);
+  }
+
+  editTransaction(id, $event: MouseEvent) {
+    $event.stopPropagation();
+    this.router.navigate(['/editTransaction', id]);
   }
 }
