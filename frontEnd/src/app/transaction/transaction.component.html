@@ -55,25 +55,11 @@
         </div>
       </div>
       <div class="col-sm-2 col-md-2 col-lg-2">
-        <label for="date">Date</label>
-      </div>
-      <div class="col-sm-4 col-md-4 col-lg-4">
-        <input type="text" class="form-control" id="date" placeholder="Date" formControlName="date">
-        <div *ngIf="form.get('date').invalid && form.get('date').dirty" class="text-danger">
-          Field is required
-        </div>
-      </div>
-    </div>
-
-    <div class="row form-group">
-      <div class="col-sm-2 col-md-2 col-lg-2">
         <label for="accountName">Account</label>
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
         <input type="text" class="form-control" id="accountName" formControlName="accountName">
       </div>
-      <div class="col-sm-2 col-md-2 col-lg-2"></div>
-      <div class="col-sm-4 col-md-4 col-lg-4"></div>
     </div>
   </form>
 </div>

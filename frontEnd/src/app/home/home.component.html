@@ -29,7 +29,11 @@
 
           <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef mat-sort-header=""> Description</th>
-            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button (click)="editTransaction(element.id,$event)" title="edit">
+                {{element.description}}
+              </button>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="type">
@@ -48,7 +52,7 @@
 
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header="date"> Date</th>
-            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.date | date:'MMM d, y'}}</td>
           </ng-container>
 
           <ng-container matColumnDef="account">
@@ -96,21 +100,16 @@
 
                 <ng-container matColumnDef="description">
                   <th mat-header-cell *matHeaderCellDef>Description</th>
-                  <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-button (click)="viewAccount(element.id,$event)" title="View">
+                      {{element.description}}
+                    </button>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="calculatedBalance">
                   <th mat-header-cell *matHeaderCellDef>Balance</th>
                   <td mat-cell *matCellDef="let element"> {{element.calculatedBalance}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="actions">
-                  <th mat-header-cell *matHeaderCellDef>Actions</th>
-                  <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button title="View" (click)="viewAccount(element.id,$event)">
-                      <mat-icon>open_in_new</mat-icon>
-                    </button>
-                  </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsAccount; sticky: true"></tr>

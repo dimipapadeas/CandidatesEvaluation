@@ -5,16 +5,15 @@
 
   <mat-card *ngFor="let user of users" style="margin-top:10px;">
     <mat-card-header>
-      <mat-card-title>{{user.userName}}</mat-card-title>
-      <mat-card-subtitle>Firstname: {{user.fistName}} || Lastname: {{user.surName}}
+      <mat-card-title>Username: {{user.userName}}</mat-card-title>
+      <mat-card-subtitle>
+        <label>Firstname: {{user.fistName}}</label>
+        <label>Lastname: {{user.surName}}</label>
+        <label *ngIf="user.superAdmin">Role: Admin</label>
+        <label *ngIf="!user.superAdmin">Role: User</label>
+        <label>Comments: {{user.comments}}</label>
       </mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
-      <p>
-        {{user.comments}}
-      </p>
-      <span *ngIf="user.superAdmin">SA</span>
-    </mat-card-content>
     <mat-card-actions>
       <button mat-icon-button (click)="editUser(user.id)" type="button">
         <mat-icon>create</mat-icon>
