@@ -30,21 +30,24 @@ following dependencies must be installed and configured on the candidates machin
 
 ### 1: JDK 17
 
-Download and install any version of the JDK 17. Install JDK in a folder whose path does not contain spaces. Make sure to
-also set the environmental variable JAVA_HOME in your system. The variable must point to your JDK folder (
+Download and install any version of the [JDK 17](https://www.oracle.com/java/technologies/downloads/#jdk17-windows).
+Install JDK in a folder whose path does not contain spaces. Also Make sure to set the environmental variable JAVA_HOME
+in your system. The variable must point to your JDK folder (
 absolute path). The path of the "\jre\bin" folder under the JDK folder should also be **prepended** to the PATH system
 variable.
 
 ### 2: Maven Version 3.x
 
-Download and install any version of Maven 3. Install Maven in a folder whose path does not contain spaces. Make sure to
-also set the environmental variables M2_HOME and M2 in your system. The M2_HOME variable must point to the maven
-folder (absolute path). The M2 variable must point to the "bin" folder under the maven folder (absolute path). The
-absolute path of the "bin" folder under the maven folder (M2) should also be **prepended** to the PATH system variable.
+Download and install any version of [Maven 3](https://maven.apache.org/download.cgi). Install Maven in a folder whose
+path does not contain spaces. Make sure to set the environmental variables M2_HOME and M2 in your system. The M2_HOME
+variable must point to the maven folder (absolute path). The M2 variable must point to the "bin" folder under the maven
+folder (absolute path). The absolute path of the "bin" folder under the maven folder (M2) should also be **prepended**
+to the PATH system variable.
 
 ### 3: Git (Optional)
 
-The candidate can download and install the Git command line client to download the sources of the application.
+The candidate can download and install the [Git command line client](https://git-scm.com/download/win) to download the
+sources of the application.
 
 ### 4: Source code
 
@@ -61,8 +64,8 @@ Alternatively, if Git client was not installed in the previous step, you can dow
 https://
 ```
 
-In any case make sure that the folder with the application's sources is saved under a path which does not contain
-spaces.
+For your convinience, make sure that the folder with the application's sources is saved under a path which does not
+contain spaces.
 
 ### 5: Node.js (Optional)
 
@@ -73,15 +76,20 @@ either from source or as a pre-packaged bundle.
 
 Navigate to the project folder and execute the command `mvn clean install`
 
-This should compile your application. When this process finishes navigate to `/backEnd` and run `mvn spring-boot:run`
+This should compile your application. When this process finishes navigate to `/backEnd` folder and
+run `mvn spring-boot:run`
 
 Navigate to http://localhost:8080 in your browser to open the application. There are 4 available Users you can use to
-login to the application. Username and password are:
+login to the application:
+(Username and password are same)
 
-`JDoe`, `LDoe`, `SScotts` and `admin`.
+`JDoe`
+`LDoe`
+`SScotts`
+`admin`
 
-To stop the application, just terminate the execution of the previous command. After making changes to the code stop the
-application and repeat step `6`
+To terminate the application, just terminate the execution of the previous command `Ctrl + C`. After making changes to
+the code stop the application and repeat step `6`
 
 More information regarding the components of the Application can be found in further README files in each of the project
 modules.
@@ -97,8 +105,8 @@ Test to begin the candidate should identify and fix the compilation errors in th
 
 ### Exercise 2 (10 points)
 
-At the moment The code runs into some exceptions when The User tries to view the About page. The candidate should Find
-the exceptions and eliminate the broken behaviour.
+At the moment code runs into some exceptions when the User tries to open the About page. The candidate should Find the
+exceptions and eliminate the broken behaviour.
 
 ### Exercise 3 (30 points)
 
@@ -108,9 +116,8 @@ each successful improvement the candidate gets awarded with points up to the max
 
 ### Exercise 4 (40 points)
 
-At the moment the Users are unable to register their Age. For this exercise add an age Attribute to the users. To
-Complete this task the candidate should implement all the necessary changes in the frontend, the backend and the
-database.
+At the moment Users are unable to register their Age. For this exercise add an age Attribute to the users. To complete
+this task the candidate should implement all the necessary changes in the frontend, the backend and the database.
 
 ### Extra Credit Exercise
 
