@@ -1,4 +1,4 @@
-# SpringBoot-Angular
+# European Dynamics Accounting System
 
 A Sandbox project that has the goal to assess the development skills of a Web Developer candidate by completing
 exercises.
