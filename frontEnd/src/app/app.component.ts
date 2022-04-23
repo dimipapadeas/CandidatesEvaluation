@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(private loginservice: AuthenticationService, private router: Router, private notifyService: NotificationService) {
   }
 
-  title = 'Spring Boot Angular Template';
+  title = 'European Dynamics Accounting System';
   username = '';
 
   logout() {
