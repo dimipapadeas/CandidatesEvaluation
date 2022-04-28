@@ -1,15 +1,17 @@
 package com.eurodyn.service;
 
+import java.util.Objects;
+
+import javax.transaction.Transactional;
+
 import com.eurodyn.model.JwtResponse;
 import com.eurodyn.model.UserPrincipal;
-import com.eurodyn.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.Objects;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
@@ -18,7 +20,6 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    private final UserRepository userRepository;
     private final UserService userService;
 
     /**

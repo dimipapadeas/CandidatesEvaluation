@@ -1,16 +1,15 @@
 package com.eurodyn.dtos;
 
-import com.eurodyn.model.TransanctionType;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.eurodyn.model.TransanctionType;
+
+import lombok.Getter;
+import lombok.Setter;
+
 @Getter
 @Setter
-@NoArgsConstructor
 public class TransactionDTO {
 
     private long id;

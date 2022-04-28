@@ -66,7 +66,7 @@ export class TransactionService {
   }
 
   getTransactionById(transactionId: any) {
-    return this.httpClient.get(`${environment.apiUrl + '/transactions/getTransactionIdById'}/${transactionId}`, {
+    return this.httpClient.get(`${environment.apiUrl + '/transactions/getTransactionById'}/${transactionId}`, {
       observe: 'response'
     })
   }

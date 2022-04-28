@@ -1,5 +1,13 @@
 package com.eurodyn.service;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import com.eurodyn.dtos.TransactionDTO;
 import com.eurodyn.mappers.TransactionMapper;
 import com.eurodyn.model.Account;
@@ -9,14 +17,13 @@ import com.eurodyn.model.User;
 import com.eurodyn.repositories.AccountRepository;
 import com.eurodyn.repositories.TransactionsRepository;
 import com.eurodyn.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.*;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
@@ -125,7 +132,7 @@ public class TransactionsService {
      * @param transactionId the id of the Transaction requested
      * @return TransactionDTO
      */
-    public TransactionDTO getTransactionIdById(long transactionId) {
+    public TransactionDTO getTransactionById(long transactionId) {
         Transaction transaction = transactionsRepository.findById(transactionId).orElse(null);
         return mapper.entityToDto(transaction);
     }

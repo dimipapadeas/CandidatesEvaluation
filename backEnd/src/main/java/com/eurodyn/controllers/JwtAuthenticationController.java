@@ -3,9 +3,14 @@ package com.eurodyn.controllers;
 import com.eurodyn.model.JwtRequest;
 import com.eurodyn.model.JwtResponse;
 import com.eurodyn.service.AuthenticationService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin
@@ -21,13 +26,13 @@ public class JwtAuthenticationController {
      * @return ResponseEntity<?>
      * @throws Exception throws an Exception
      */
-    @RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
+    @PostMapping("/api/authenticate")
     public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
         JwtResponse response = authenticationService.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         return ResponseEntity.ok(response);
     }
 
-    @RequestMapping(value = "/api/logout", method = RequestMethod.POST)
+    @PostMapping("/api/logout")
     public ResponseEntity<?> logout(@RequestBody String username) {
         JwtResponse response = authenticationService.logout(username);
         return ResponseEntity.ok(response);
