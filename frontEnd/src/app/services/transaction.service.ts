@@ -51,22 +51,22 @@ export class TransactionService {
 
   deleteTransaction(transactionId) {
     return this.httpClient.delete(
-      `${environment.apiUrl + '/transactions/delete'}/${transactionId}`);
+      `${environment.apiUrl + '/transactions'}/${transactionId}`);
   }
 
   updateTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.httpClient.put<Transaction>(`${environment.apiUrl + '/transactions/update'}`, transaction);
+    return this.httpClient.put<Transaction>(`${environment.apiUrl + '/transactions'}`, transaction);
   }
 
   createDraftTransaction(accountId) {
     return this.httpClient.get(
-      `${environment.apiUrl + '/transactions/createDraftTransaction'}/${accountId}`, {
+      `${environment.apiUrl + '/transactions/_draft'}/${accountId}`, {
         observe: 'response'
       })
   }
 
   getTransactionById(transactionId: any) {
-    return this.httpClient.get(`${environment.apiUrl + '/transactions/getTransactionById'}/${transactionId}`, {
+    return this.httpClient.get(`${environment.apiUrl + '/transactions'}/${transactionId}`, {
       observe: 'response'
     })
   }

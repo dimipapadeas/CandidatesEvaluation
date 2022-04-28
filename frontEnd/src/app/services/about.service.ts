@@ -12,7 +12,7 @@ export class AboutService {
 
   getVersion(param: string) {
     return this.httpClient.get(
-      environment.apiUrl + `/info/getVersion/${param}`, {
+      environment.apiUrl + `/info/${param}`, {
         observe: 'response',
       })
   }

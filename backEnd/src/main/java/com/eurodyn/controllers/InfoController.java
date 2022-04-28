@@ -1,12 +1,18 @@
 package com.eurodyn.controllers;
 
 import com.eurodyn.service.InfoService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/info/")
+@RequestMapping("api/info")
 @CrossOrigin
 @RequiredArgsConstructor
 public class InfoController {
@@ -18,7 +24,7 @@ public class InfoController {
      *
      * @return ResponseEntity<Map < String, Object>>
      */
-    @GetMapping("getVersion/{component}")
+    @GetMapping("{component}")
     public ResponseEntity<?> getVersion(@PathVariable("component") String component) {
         return ResponseEntity.ok(infoService.getVersion(component));
     }

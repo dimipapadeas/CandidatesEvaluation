@@ -33,7 +33,7 @@ public class TransactionsControllerTests extends BaseTests {
     @WithMockUser("spring")
     public void testCreateDraftTransaction() throws Exception {
         when(accountRepository.findById(1L)).thenReturn(Optional.ofNullable(account));
-        mockMvc.perform(get("/api/transactions/createDraftTransaction/1"))
+        mockMvc.perform(get("/api/transactions/_draft/1"))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(0))
                 .andExpect(status().isOk());
@@ -49,7 +49,7 @@ public class TransactionsControllerTests extends BaseTests {
         when(transactionsRepository.findById(1L)).thenReturn(Optional.of(t1));
         when(userRepository.findByUserName("spring")).thenReturn(user);
         when(accountRepository.findByDescription("testAccount")).thenReturn(account);
-        this.mockMvc.perform(put("/api/transactions/update/")
+        this.mockMvc.perform(put("/api/transactions/")
                         .content(asJsonString(transactionDTO))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -62,7 +62,7 @@ public class TransactionsControllerTests extends BaseTests {
     @WithMockUser("spring")
     public void testGetById() throws Exception {
         when(transactionsRepository.findById(2L)).thenReturn(Optional.of(t2));
-        this.mockMvc.perform(get("/api/transactions/getTransactionById/2")
+        this.mockMvc.perform(get("/api/transactions/2")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))

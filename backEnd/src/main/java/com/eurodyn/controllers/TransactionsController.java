@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/transactions/")
+@RequestMapping("api/transactions")
 @CrossOrigin
 @RequiredArgsConstructor
 public class TransactionsController {
@@ -31,7 +31,7 @@ public class TransactionsController {
      *
      * @param transactionId the Id of the Transaction to delete
      */
-    @DeleteMapping("delete/{transactionId}")
+    @DeleteMapping("{transactionId}")
     public void delete(@PathVariable("transactionId") long transactionId) {
         transactionsService.deleteTransaction(transactionId);
     }
@@ -42,7 +42,7 @@ public class TransactionsController {
      * @param accountId The account that requested a new Transaction
      * @return TransactionDTO
      */
-    @GetMapping("createDraftTransaction/{accountId}")
+    @GetMapping("_draft/{accountId}")
     public ResponseEntity<TransactionDTO> createDraftTransaction(@PathVariable("accountId") String accountId) {
         return ResponseEntity.ok(transactionsService.createDraftTransaction(accountId));
     }
@@ -53,7 +53,7 @@ public class TransactionsController {
      * @param transaction the updated Transaction
      * @return TransactionDTO
      */
-    @PutMapping("update")
+    @PutMapping
     public ResponseEntity<TransactionDTO> update(@RequestBody TransactionDTO transaction) {
         return ResponseEntity.ok(transactionsService.updateTransaction(transaction));
     }
@@ -64,7 +64,7 @@ public class TransactionsController {
      * @param transactionId the id of the Transaction requested
      * @return TransactionDTO
      */
-    @GetMapping("getTransactionById/{transactionId}")
+    @GetMapping("{transactionId}")
     public ResponseEntity<TransactionDTO> getTransactionById(@PathVariable("transactionId") long transactionId) {
         return ResponseEntity.ok(transactionsService.getTransactionById(transactionId));
     }

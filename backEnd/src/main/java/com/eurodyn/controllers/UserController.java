@@ -2,13 +2,22 @@ package com.eurodyn.controllers;
 
 import com.eurodyn.dtos.UserDTO;
 import com.eurodyn.service.UserService;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/user/")
+@RequestMapping("api/user")
 @CrossOrigin
 @RequiredArgsConstructor
 @Slf4j
@@ -21,7 +30,7 @@ public class UserController {
      *
      * @return List<UserDTO>
      */
-    @GetMapping("getAll")
+    @GetMapping
     public ResponseEntity<?> getUser() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
@@ -32,7 +41,7 @@ public class UserController {
      * @param userId the id of the User requested
      * @return UserDTO
      */
-    @GetMapping("getUserById/{userId}")
+    @GetMapping("{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("userId") long userId) {
         log.debug("Called: getuser with {}", userId);
         return ResponseEntity.ok(userService.getUserById(userId));
@@ -44,7 +53,7 @@ public class UserController {
      * @param user the updated User
      * @return UserDTO
      */
-    @PostMapping("update")
+    @PostMapping
     public ResponseEntity<UserDTO> update(@RequestBody UserDTO user) {
         return ResponseEntity.ok(userService.updateUser(user));
     }
@@ -54,7 +63,7 @@ public class UserController {
      *
      * @return UserDTO
      */
-    @GetMapping("createDraftUser")
+    @GetMapping("_draft")
     public ResponseEntity<UserDTO> createDraftUser() {
         return ResponseEntity.ok(userService.createDraftUser());
     }
@@ -64,7 +73,7 @@ public class UserController {
      *
      * @param userId the id of the User to delete
      */
-    @DeleteMapping("delete/{userId}")
+    @DeleteMapping("{userId}")
     public void delete(@PathVariable("userId") long userId) {
         userService.deleteUser(userId);
     }

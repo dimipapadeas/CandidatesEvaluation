@@ -2,13 +2,22 @@ package com.eurodyn.controllers;
 
 import com.eurodyn.dtos.AccountDTO;
 import com.eurodyn.service.AccountService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/account/")
+@RequestMapping("api/account")
 @CrossOrigin
 @RequiredArgsConstructor
 public class AccountController {
@@ -21,7 +30,7 @@ public class AccountController {
      * @param accountId the id of the Account to get
      * @return AccountDTO
      */
-    @GetMapping("getAccountById/{accountId}")
+    @GetMapping("{accountId}")
     public ResponseEntity<AccountDTO> getAccountById(@PathVariable("accountId") long accountId) {
         return ResponseEntity.ok(accountService.getAccountById(accountId));
     }
@@ -31,7 +40,7 @@ public class AccountController {
      *
      * @return AccountDTO
      */
-    @GetMapping("draftAccount")
+    @GetMapping("_draft")
     public ResponseEntity<AccountDTO> createAccount() {
         return ResponseEntity.ok(accountService.draftAccount());
     }
@@ -43,7 +52,7 @@ public class AccountController {
      * @param userID the username
      * @return ResponseEntity<Map < String, Object>>
      */
-    @GetMapping("getAll")
+    @GetMapping
     public ResponseEntity<?> getByUsername(@RequestParam(name = "userID", defaultValue = "") String userID) {
         PageRequest pageRequest = PageRequest.of(0, 100);
         return ResponseEntity.ok(accountService.getAll(pageRequest, userID));
@@ -55,7 +64,7 @@ public class AccountController {
      * @param accountDTO the updated Account
      * @return AccountDTO
      */
-    @PutMapping("update")
+    @PutMapping
     public ResponseEntity<AccountDTO> update(@RequestBody AccountDTO accountDTO) {
         return ResponseEntity.ok(accountService.updateAccount(accountDTO));
     }

@@ -23,7 +23,7 @@ export class AccountService {
 
   getAll(userID: string) {
     return this.httpClient.get(
-      environment.apiUrl + '/account/getAll', {
+      environment.apiUrl + '/account', {
         observe: 'response',
         params: new HttpParams()
           .set('userID', userID)
@@ -32,18 +32,18 @@ export class AccountService {
 
   getAccountById(accountId: any) {
     return this.httpClient.get(
-      `${environment.apiUrl + '/account/getAccountById'}/${accountId}`, {
+      `${environment.apiUrl + '/account'}/${accountId}`, {
         observe: 'response'
       })
   }
 
   createDraftAccount() {
-    return this.httpClient.get(`${environment.apiUrl + '/account/draftAccount'}`, {
+    return this.httpClient.get(`${environment.apiUrl + '/account/_draft'}`, {
       observe: 'response'
     })
   }
 
   updateAccount(account: Account): Observable<Account> {
-    return this.httpClient.put<Account>(`${environment.apiUrl + '/account/update'}`, account);
+    return this.httpClient.put<Account>(`${environment.apiUrl + '/account'}`, account);
   }
 }
