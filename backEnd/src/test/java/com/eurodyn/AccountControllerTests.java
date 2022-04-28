@@ -72,7 +72,7 @@ public class AccountControllerTests extends BaseTests {
     @Test
     @WithMockUser("spring")
     public void testGetAll() throws Exception {
-        Page<Account> pagedResponse = new PageImpl(accounts);
+        Page<Account> pagedResponse = new PageImpl<>(accounts);
         when(accountRepository.findAll(PageRequest.of(0, 100))).thenReturn(pagedResponse);
         this.mockMvc.perform(get("/api/account"))
                 .andDo(print())

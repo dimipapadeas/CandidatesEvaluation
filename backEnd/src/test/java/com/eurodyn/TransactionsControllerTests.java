@@ -76,7 +76,7 @@ public class TransactionsControllerTests extends BaseTests {
         List<Transaction> all = new ArrayList<>();
         all.addAll(income);
         all.addAll(expences);
-        Page<Transaction> pagedResponse = new PageImpl(all);
+        Page<Transaction> pagedResponse = new PageImpl<>(all);
         when(userRepository.findByUserName(user.getUserName())).thenReturn(user);
         when(transactionsRepository.findByUserId(user.getId(), PageRequest.of(0, 5, Sort.by("date").ascending()))).thenReturn(pagedResponse);
         this.mockMvc.perform(get("/api/transactions/getAllForUser/")
@@ -94,7 +94,7 @@ public class TransactionsControllerTests extends BaseTests {
         List<Transaction> all = new ArrayList<>();
         all.addAll(income);
         all.addAll(expences);
-        Page<Transaction> pagedResponse = new PageImpl(all);
+        Page<Transaction> pagedResponse = new PageImpl<>(all);
         when(userRepository.findByUserName(user.getUserName())).thenReturn(user);
         when(transactionsRepository.findByUserIdAndDescriptionContaining(user.getId(), "description", PageRequest.of(0, 5, Sort.by("date").ascending()))).thenReturn(pagedResponse);
         this.mockMvc.perform(get("/api/transactions/getAllForUser/")
@@ -113,7 +113,7 @@ public class TransactionsControllerTests extends BaseTests {
         List<Transaction> all = new ArrayList<>();
         all.addAll(income);
         all.addAll(expences);
-        Page<Transaction> pagedResponse = new PageImpl(all);
+        Page<Transaction> pagedResponse = new PageImpl<>(all);
         when(transactionsRepository.findByAccountId(1L, PageRequest.of(0, 5, Sort.by("date").ascending()))).thenReturn(pagedResponse);
         this.mockMvc.perform(get("/api/transactions/getAllForAccount/")
                         .param("accountId", "1")
