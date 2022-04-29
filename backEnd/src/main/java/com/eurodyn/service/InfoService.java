@@ -1,13 +1,16 @@
 package com.eurodyn.service;
 
-import com.eurodyn.model.Info;
-import com.eurodyn.repositories.InfoRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.transaction.Transactional;
+
+import com.eurodyn.model.Info;
+import com.eurodyn.repositories.InfoRepository;
+
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
@@ -24,7 +27,7 @@ public class InfoService {
      */
     public Map<String, Object> getVersion(String component) {
         Map<String, Object> response = new HashMap<>();
-        Info info = infoRepository.findByComponent(component);
+        Info info = infoRepository.findByComponent(null);
         response.put(component, info.getVersion());
         return response;
     }
