@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(private loginservice: AuthenticationService, private router: Router, private notifyService: NotificationService) {
   }
 
-  title = 'European Dynamics Accounting System';
+  title = 'Easy Dynamic Accounting System';
   username = '';
 
   logout() {
