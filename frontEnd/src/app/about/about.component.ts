@@ -20,7 +20,7 @@ export class AboutComponent implements OnInit {
   }
 
   private populateMask() {
-    this.aboutService.getVersion("backend").pipe(
+    this.aboutService.getVersion("backssssend").pipe(
       tap((response: any) => {
         this.backVersion = response.body.backend;
       })
