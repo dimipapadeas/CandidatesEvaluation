@@ -1,9 +1,11 @@
 # Accounting System
 
 A Sandbox project that has the goal to assess the development skills of a Web Developer candidate by completing
-exercises.
+exercises. The Web Application is a small scale Accounting System to manage Accounts of Users and their transactions. 
+On the home screen the user is presented with his transactions, and his accounts. The Application allows searching for 
+transactions as well as adding new ones. The application allows adding new Accounts and Users as well. 
 
-The exercises require Java, HTML, Typescript/Javascript and SQL skills to complete.
+To complete the exercises the candidate requires some knowledge in Java, HTML, Typescript/Javascript and SQL.
 
 These instructions include everything the candidate needs to know on how to download the sources of this simplified web
 application on a personal computer as well as how to deploy and run it. The instructions begin with going through the
@@ -55,13 +57,13 @@ Download the sources of the application. If Git client was installed in the prev
 command line to a folder in which you want to download the source code. Run the following command:
 
 ```
-git clone 
+git clone https://github.com/DimiTerz/SpringBootAngular.git
 ```
 
 Alternatively, if Git client was not installed in the previous step, you can download the zip from
 
 ```
-https://
+https://github.com/DimiTerz/SpringBootAngular
 ```
 
 For your convinience, make sure that the folder with the application's sources is saved under a path which does not
@@ -108,14 +110,17 @@ Test to begin the candidate should identify and fix the compilation errors in th
 At the moment code runs into some exceptions when the User tries to open the About page. The candidate should Find the
 exceptions and eliminate the broken behaviour.
 
-### Exercise 3 (30 points)
+### Exercise 3 (20 points)
 
 To display the current Balance of an account the Function `Calcbalance2` is used. To complete this Exercise the
 candidate should identify and fix issues with this function regarding code style, functionality, performance, etc. For
 each successful improvement the candidate gets awarded with points up to the maximum for this Exercise.
 
-### Exercise 4 (40 points)
+### Exercise 4 (10 points)
+At the moment there are some Tests implemented for the Java code. In class `UserControllerTests` only a sceleton remains
+for the tests remain. To complete this exercise the candidate needs to complete the missing JUnit test.
 
+### Exercise 5 (30 points)
 At the moment Users are unable to register their Age. For this exercise add an age Attribute to the users. To complete
 this task the candidate should implement all the necessary changes in the frontend, the backend and the database.
 
@@ -131,8 +136,8 @@ libraries and can implement it in any way. The only conditions in place are the 
 
 ## Delivery
 
-When finished the candidate should compress the root folder of the project and send it to the assessor by email. Along
-with the compressed file a screenshot of the candidate's browser with the Application running and a user logged in
+When finished the candidate should upload the finished project to his personal GitHub, creating a new repository and 
+provide the evaluators with the link. A screenshot of the candidate's browser with the Application running and a user logged in
 should be sent in order to verify that the installation was successfully completed.
 
 The deadline to send the compressed file is determined by the assessor. Normally it should be exactly three days after
